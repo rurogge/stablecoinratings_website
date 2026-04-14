@@ -1,7 +1,6 @@
-# Pipeline outputs — generated daily, not tracked
-data/ratings_full.json
-data/grades.json
-data/history.json
+# Pipeline outputs (now in site/data/ — tracked in git for deployment)
+# site/data/*.json are committed so Cloudflare Pages can serve them
+# The pipeline overwrites these files in-place on each run.
 
 # Python
 __pycache__/

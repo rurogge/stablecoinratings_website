@@ -1,0 +1,207 @@
+{
+  "versions": [
+    {
+      "date": "2026-04-13T02:00:00Z",
+      "coins": {
+        "USDP": {
+          "letter": "B+",
+          "total": 84.6,
+          "peg": 96.0,
+          "reserve": 88.8,
+          "liquidity": 60.5,
+          "management": 93.0,
+          "smart_contract": 78.0,
+          "decentralization": 56.0,
+          "systemic_penalty": 0
+        },
+        "DAI": {
+          "letter": "B+",
+          "total": 84.2,
+          "peg": 98.4,
+          "reserve": 87.2,
+          "liquidity": 44.5,
+          "management": 83.0,
+          "smart_contract": 96.0,
+          "decentralization": 83.0,
+          "systemic_penalty": 0
+        },
+        "USDC": {
+          "letter": "B+",
+          "total": 84.1,
+          "peg": 99.4,
+          "reserve": 73.8,
+          "liquidity": 75.2,
+          "management": 93.0,
+          "smart_contract": 78.0,
+          "decentralization": 56.0,
+          "systemic_penalty": 0
+        },
+        "GUSD": {
+          "letter": "B",
+          "total": 79.6,
+          "peg": 96.0,
+          "reserve": 88.8,
+          "liquidity": 32.5,
+          "management": 93.0,
+          "smart_contract": 78.0,
+          "decentralization": 40.0,
+          "systemic_penalty": 0
+        },
+        "FRAX": {
+          "letter": "B-",
+          "total": 72.1,
+          "peg": 88.0,
+          "reserve": 65.0,
+          "liquidity": 45.5,
+          "management": 66.0,
+          "smart_contract": 86.0,
+          "decentralization": 83.0,
+          "systemic_penalty": 0
+        },
+        "USDD": {
+          "letter": "C+",
+          "total": 64.9,
+          "peg": 98.1,
+          "reserve": 47.0,
+          "liquidity": 52.5,
+          "management": 50.5,
+          "smart_contract": 52.0,
+          "decentralization": 62.0,
+          "systemic_penalty": 0
+        },
+        "TUSD": {
+          "letter": "C+",
+          "total": 64.8,
+          "peg": 92.5,
+          "reserve": 52.5,
+          "liquidity": 36.5,
+          "management": 63.0,
+          "smart_contract": 62.0,
+          "decentralization": 56.0,
+          "systemic_penalty": 0
+        },
+        "PYUSD": {
+          "letter": "C+",
+          "total": 61.3,
+          "peg": 98.8,
+          "reserve": 41.0,
+          "liquidity": 44.5,
+          "management": 46.5,
+          "smart_contract": 58.0,
+          "decentralization": 40.0,
+          "systemic_penalty": 0
+        },
+        "USDT": {
+          "letter": "C",
+          "total": 58.2,
+          "peg": 98.2,
+          "reserve": 54.8,
+          "liquidity": 81.2,
+          "management": 45.5,
+          "smart_contract": 58.0,
+          "decentralization": 64.0,
+          "systemic_penalty": -13
+        },
+        "PAXG": {
+          "letter": "C",
+          "total": 57.0,
+          "peg": 50.0,
+          "reserve": 59.5,
+          "liquidity": 50.5,
+          "management": 64.5,
+          "smart_contract": 68.0,
+          "decentralization": 62.0,
+          "systemic_penalty": 0
+        },
+        "XAUT": {
+          "letter": "C",
+          "total": 57.0,
+          "peg": 50.0,
+          "reserve": 59.5,
+          "liquidity": 50.5,
+          "management": 64.5,
+          "smart_contract": 68.0,
+          "decentralization": 62.0,
+          "systemic_penalty": 0
+        },
+        "BUSD": {
+          "letter": "C",
+          "total": 56.6,
+          "peg": 50.0,
+          "reserve": 80.8,
+          "liquidity": 28.0,
+          "management": 53.2,
+          "smart_contract": 72.0,
+          "decentralization": 40.0,
+          "systemic_penalty": 0
+        },
+        "FDUSD": {
+          "letter": "D+",
+          "total": 46.9,
+          "peg": 50.0,
+          "reserve": 29.5,
+          "liquidity": 69.2,
+          "management": 46.5,
+          "smart_contract": 52.0,
+          "decentralization": 40.0,
+          "systemic_penalty": 0
+        },
+        "OGN": {
+          "letter": "D+",
+          "total": 44.1,
+          "peg": 50.0,
+          "reserve": 29.5,
+          "liquidity": 50.5,
+          "management": 46.5,
+          "smart_contract": 52.0,
+          "decentralization": 40.0,
+          "systemic_penalty": 0
+        },
+        "SEUR": {
+          "letter": "D+",
+          "total": 43.6,
+          "peg": 50.0,
+          "reserve": 29.5,
+          "liquidity": 28.0,
+          "management": 46.5,
+          "smart_contract": 70.0,
+          "decentralization": 61.0,
+          "systemic_penalty": 0
+        },
+        "BEAN": {
+          "letter": "D",
+          "total": 38.0,
+          "peg": 5.0,
+          "reserve": 57.0,
+          "liquidity": 40.0,
+          "management": 57.5,
+          "smart_contract": 80.0,
+          "decentralization": 67.0,
+          "systemic_penalty": 0
+        },
+        "XSGD": {
+          "letter": "C+",
+          "total": 66.5,
+          "peg": 50.0,
+          "reserve": 88.8,
+          "liquidity": 44.5,
+          "management": 85.2,
+          "smart_contract": 78.0,
+          "decentralization": 40.0,
+          "systemic_penalty": 0
+        },
+        "RAI": {
+          "letter": "C+",
+          "total": 63.3,
+          "peg": 50.0,
+          "reserve": 82.8,
+          "liquidity": 28.0,
+          "management": 73.8,
+          "smart_contract": 90.0,
+          "decentralization": 67.0,
+          "systemic_penalty": 0
+        }
+      }
+    }
+  ]
+}
