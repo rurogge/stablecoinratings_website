@@ -1,0 +1,14 @@
+[Unit]
+Description=StablecoinRatings Daily Pipeline Timer
+Requires=stablecoinratings.service
+
+[Timer]
+# Run once daily at 02:00 UTC
+OnCalendar=*-*-* 02:00:00 UTC
+Persistent=true
+
+# Randomized delay up to 15 minutes to avoid thundering herd on APIs
+RandomizedDelaySec=900
+
+[Install]
+WantedBy=timers.target

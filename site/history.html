@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating History — StablecoinRatings</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0b0e'/><path d='M16 4L6 8.5v9c0 5.5 4.3 10.6 10 12 5.7-1.4 10-6.5 10-12V8.5L16 4z' fill='none' stroke='%233b82f6' stroke-width='2'/><text x='16' y='21' font-size='14' font-weight='bold' fill='%233b82f6' text-anchor='middle' font-family='monospace'>S</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<nav class="nav">
+    <div class="nav__inner">
+        <a href="/index.html" class="nav__logo">
+            <svg class="nav__logo-mark" viewBox="0 0 32 32" fill="none"><path d="M16 3L5 8v10c0 6.6 4.7 12.7 11 14 6.3-1.3 11-7.4 11-14V8L16 3z" fill="none" stroke="var(--accent)" stroke-width="1.8"/><path d="M11 17l3 3 7-7" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><div class="nav__logo-text">StablecoinRatings</div><div class="nav__logo-sub">Independent Risk Layer</div></div>
+        </a>
+        <ul class="nav__links">
+            <li><a href="/index.html">Ratings</a></li>
+            <li><a href="/methodology.html">Methodology</a></li>
+            <li><a href="/history.html" class="active">History</a></li>
+            <li><a href="/data.html">Open Data</a></li>
+        </ul>
+        <div class="nav__actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="page">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-8);">
+        <div>
+            <h1 style="font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px;">Rating History</h1>
+            <p style="color:var(--text-muted);font-size:14px;">Historical score changes for every rated stablecoin. Archival data retained for 365 days.</p>
+        </div>
+        <div class="history-controls">
+            <select id="coinSelect"><option value="">Select coin…</option></select>
+            <select id="metricSelect">
+                <option value="total">Overall Score</option>
+                <option value="peg">Peg Stability</option>
+                <option value="reserve">Reserve Quality</option>
+                <option value="liquidity">Liquidity</option>
+                <option value="management">Management</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="chart-card chart-card--wide" style="margin-bottom:var(--space-6);">
+        <div class="chart-card__title" id="chartTitle">Overall Score — USDT</div>
+        <canvas id="historyChart" height="80"></canvas>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Coin</th>
+                    <th>Grade</th>
+                    <th>Score</th>
+                    <th>Peg</th>
+                    <th>Reserve</th>
+                    <th>Liquidity</th>
+                    <th>Management</th>
+                    <th>SC</th>
+                    <th>Dec</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <tr><td colspan="10" style="padding:2rem;text-align:center;color:var(--text-muted);">Loading history…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer__bottom" style="border-top:1px solid var(--border);padding-top:var(--space-6);max-width:var(--max-width);margin:0 auto;">
+        <span>StablecoinRatings.org</span>
+        <span>Data: CoinGecko, Binance, DeFiLlama</span>
+    </div>
+</footer>
+
+<script>
+(function() {
+    // Theme
+    var stored = localStorage.getItem("scr_theme") || (window.matchMedia("(prefers-color: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", stored);
+    document.getElementById("themeToggle").addEventListener("click", function() {
+        var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("scr_theme", next);
+    });
+
+    var historyData = null;
+    var historyChart = null;
+    var selectedCoin = "";
+    var selectedMetric = "total";
+
+    function gradeColor(g) {
+        var map = { "a":"#22c55e","b":"#3b82f6","c":"#f59e0b","d":"#ef4444" };
+        var prefix = g && g[0].toLowerCase();
+        return map[prefix] || "#9aa0a8";
+    }
+    function gradeClass(g) {
+        var prefix = g && g[0].toLowerCase();
+        return "grade-" + (prefix || "c");
+    }
+
+    async function init() {
+        try {
+            var res = await fetch("data/ratings_full.json", {cache:"no-store"});
+            var allData = await res.json();
+            var hRes = await fetch("data/history.json", {cache:"no-store"});
+            historyData = await hRes.json();
+        } catch(e) {
+            document.getElementById("historyTableBody").innerHTML =
+                '<tr><td colspan="10" style="padding:2rem;text-align:center;color:var(--text-muted);">Could not load history data.</td></tr>';
+            return;
+        }
+
+        // Populate coin select
+        var coins = (allData.usd_stablecoins || []).map(function(c){return c.symbol;})
+            .concat((allData.non_usd_stablecoins || []).map(function(c){return c.symbol;}));
+        var sel = document.getElementById("coinSelect");
+        coins.forEach(function(sym) {
+            var opt = document.createElement("option");
+            opt.value = sym; opt.textContent = sym;
+            sel.appendChild(opt);
+        });
+        if (coins.length) { sel.value = coins[0]; selectedCoin = coins[0]; }
+
+        sel.addEventListener("change", function() {
+            selectedCoin = sel.value;
+            renderChart();
+        });
+        document.getElementById("metricSelect").addEventListener("change", function() {
+            selectedMetric = this.value;
+            renderChart();
+        });
+
+        renderChart();
+        renderTable();
+    }
+
+    function renderChart() {
+        if (!historyData || !historyData.versions || !selectedCoin) return;
+        var metric = selectedMetric;
+        var sym = selectedCoin;
+        var label = {total:"Overall Score",peg:"Peg Stability",reserve:"Reserve Quality",
+                      liquidity:"Liquidity",management:"Management"}[metric] || metric;
+        document.getElementById("chartTitle").textContent = label + " — " + sym;
+
+        var vers = historyData.versions;
+        var labels = vers.map(function(v){ return new Date(v.date).toLocaleDateString("en-US",{month:"short",day:"numeric"}); });
+        var data = vers.map(function(v){
+            var c = v.coins && v.coins[sym];
+            return c ? c[metric] : null;
+        }).filter(function(v){ return v != null; });
+
+        if (historyChart) historyChart.destroy();
+        var ctx = document.getElementById("historyChart");
+        historyChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels.slice(-labels.length),
+                datasets: [{
+                    label: label,
+                    data: data,
+                    borderColor: "#3b82f6",
+                    borderWidth: 2,
+                    fill: true,
+                    backgroundColor: "rgba(59,130,246,0.08)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "#3b82f6",
+                    tension: 0.3,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: "#9aa0a8", font: {size:11} }, grid: { color: "#252a35" } },
+                    y: { min: 0, max: 100, ticks: { color: "#9aa0a8", font: {size:11} }, grid: { color: "#252a35" } },
+                }
+            }
+        });
+    }
+
+    function renderTable() {
+        if (!historyData || !historyData.versions) return;
+        var tbody = document.getElementById("historyTableBody");
+        var rows = [];
+        // Show last 30 days of snapshots
+        var vers = historyData.versions.slice(-30).reverse();
+        vers.forEach(function(v) {
+            var date = new Date(v.date).toLocaleDateString("en-US", {year:"numeric",month:"short",day:"numeric"});
+            for (var sym in v.coins) {
+                var c = v.coins[sym];
+                rows.push({date:date, sym:sym, letter:c.letter||"—", total:c.total, peg:c.peg||"—", reserve:c.reserve||"—",
+                           liquidity:c.liquidity||"—", management:c.management||"—", sc:c.smart_contract||"—", dec:c.decentralization||"—"});
+            }
+        });
+        // Limit display
+        rows = rows.slice(0, 200);
+
+        if (!rows.length) {
+            tbody.innerHTML = '<tr><td colspan="10" style="padding:2rem;text-align:center;color:var(--text-muted);">No historical data yet. Data accumulates after daily pipeline runs.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = rows.map(function(r) {
+            return '<tr style="border-bottom:1px solid var(--border);">' +
+                '<td style="padding:8px 16px;font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">'+r.date+'</td>' +
+                '<td style="padding:8px 16px;font-weight:700;font-size:13px;">'+r.sym+'</td>' +
+                '<td style="padding:8px 16px;"><span class="grade-badge '+gradeClass(r.letter)+'">'+r.letter+'</span></td>' +
+                '<td style="padding:8px 16px;font-family:var(--font-mono);font-weight:600;">'+(typeof r.total==="number"?r.total.toFixed(1):r.total)+'</td>' +
+                '<td style="padding:8px 16px;font-family:var(--font-mono);font-size:12px;">'+(typeof r.peg==="number"?r.peg.toFixed(1):r.peg)+'</td>' +
+                '<td style="padding:8px 16px;font-family:var(--font-mono);font-size:12px;">'+(typeof r.reserve==="number"?r.reserve.toFixed(1):r.reserve)+'</td>' +
+                '<td style="padding:8px 16px;font-family:var(--font-mono);font-size:12px;">'+(typeof r.liquidity==="number"?r.liquidity.toFixed(1):r.liquidity)+'</td>' +
+                '<td style="padding:8px 16px;font-family:var(--font-mono);font-size:12px;">'+(typeof r.management==="number"?r.management.toFixed(1):r.management)+'</td>' +
+                '<td style="padding:8px 16px;font-family:var(--font-mono);font-size:12px;">'+(typeof r.sc==="number"?r.sc.toFixed(1):r.sc)+'</td>' +
+                '<td style="padding:8px 16px;font-family:var(--font-mono);font-size:12px;">'+(typeof r.dec==="number"?r.dec.toFixed(1):r.dec)+'</td>' +
+                '</tr>';
+        }).join("");
+    }
+
+    init();
+})();
+</script>
+</body>
+</html>

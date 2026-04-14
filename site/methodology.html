@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Public stablecoin rating methodology — six pillars, transparent scoring, open data.">
+    <title>Methodology — StablecoinRatings</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0b0e'/><path d='M16 4L6 8.5v9c0 5.5 4.3 10.6 10 12 5.7-1.4 10-6.5 10-12V8.5L16 4z' fill='none' stroke='%233b82f6' stroke-width='2'/><text x='16' y='21' font-size='14' font-weight='bold' fill='%233b82f6' text-anchor='middle' font-family='monospace'>S</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Methodology page nav highlight */
+        .nav__links a[href="/methodology.html"] { color: var(--text-primary); background: var(--accent-muted); }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav__inner">
+        <a href="/index.html" class="nav__logo">
+            <svg class="nav__logo-mark" viewBox="0 0 32 32" fill="none"><path d="M16 3L5 8v10c0 6.6 4.7 12.7 11 14 6.3-1.3 11-7.4 11-14V8L16 3z" fill="none" stroke="var(--accent)" stroke-width="1.8"/><path d="M11 17l3 3 7-7" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><div class="nav__logo-text">StablecoinRatings</div><div class="nav__logo-sub">Independent Risk Layer</div></div>
+        </a>
+        <ul class="nav__links">
+            <li><a href="/index.html">Ratings</a></li>
+            <li><a href="/methodology.html" class="active">Methodology</a></li>
+            <li><a href="/history.html">History</a></li>
+            <li><a href="/data.html">Open Data</a></li>
+        </ul>
+        <div class="nav__actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="page">
+    <div class="methodology-toc">
+
+        <!-- Sidebar nav -->
+        <nav class="methodology-toc__nav">
+            <div class="methodology-toc__nav-title">On this page</div>
+            <a href="#overview">Overview</a>
+            <a href="#pillars">Six Pillars</a>
+            <a href="#scoring">Scoring Scale</a>
+            <a href="#weights">Weight Profiles</a>
+            <a href="#grades">Grade Definitions</a>
+            <a href="#sources">Data Sources</a>
+            <a href="#fallbacks">Fallback Logic</a>
+            <a href="#benchmarks">Benchmark</a>
+            <a href="#changelog">Version History</a>
+        </nav>
+
+        <!-- Content -->
+        <div class="methodology-content">
+
+            <h2 id="overview">Overview</h2>
+            <p>StablecoinRatings evaluates stablecoins across six independent pillars. Each pillar outputs a 0–100 score. Scores are weighted and aggregated into an overall numeric rating (0–100) which maps to a letter grade (D– to A+).</p>
+            <p>The framework is fully algorithmic. All data is sourced from public, free APIs. No manual overrides exist in the raw score. The methodology is versioned; score changes are tracked in the <a href="/history.html">history archive</a>.</p>
+
+            <div class="formula-block">
+Overall Score = Peg Stability &times; 30%<br>
+              + Reserve Quality &times; 25%<br>
+              + Liquidity &amp; Market Depth &times; 15%<br>
+              + Management &amp; Transparency &times; 15%<br>
+              + Smart Contract Security &times; 10%<br>
+              + Decentralization &times; 5%<br>
+              &plusmn; Systemic Risk Multiplier
+            </div>
+
+            <h2 id="pillars">Six Pillars</h2>
+
+            <h3>1. Peg Stability (30%)</h3>
+            <p>Measures how reliably the stablecoin maintains its peg under normal and stress conditions. Five sub-factors:</p>
+            <ul>
+                <li><strong>Average Deviation (20%):</strong> 30-day rolling mean of |price − $1.00| expressed as %.</li>
+                <li><strong>Max Deviation (25%):</strong> Largest single deviation in any 72h window over 90 days. Captures stress-period behavior.</li>
+                <li><strong>Depeg Recovery (20%):</strong> Average time to return within 0.1% of $1.00 after a &gt;0.5% deviation.</li>
+                <li><strong>Volatility (20%):</strong> Standard deviation of hourly returns over 30 days.</li>
+                <li><strong>Depeg Days (15%):</strong> Number of days in the past 365 where price was outside the ±1% band.</li>
+            </ul>
+            <p><strong>Special rule:</strong> If current price &lt; $0.90, peg_score = max(5, (1 − price) × 100) directly. This handles catastrophic depegs (e.g. Bean at $0.23 → score = 5).</p>
+
+            <h3>2. Reserve Quality (25%)</h3>
+            <p>Evaluates the quality, transparency, and sufficiency of backing assets.</p>
+            <ul>
+                <li><strong>Reserve Composition (30%):</strong> Share held in cash, T-bills, and money market funds. Undisclosed = score 20. Crypto-backed over-collateralized positions receive +15 bonus.</li>
+                <li><strong>Attestation Frequency (25%):</strong> Monthly = 100, Quarterly = 70, None = 20.</li>
+                <li><strong>Attestation Quality (20%):</strong> Full Big-4 audit = 100; limited third-party = 65; internal = 40; self-reported = 15; none = 0.</li>
+                <li><strong>Bankruptcy Remote Status (15%):</strong> Legally proven bankruptcy-remote = 100. Regulatory license (NYDFS, MAS) + segregated accounts = 70 (capped; regulatory claim ≠ legal proof). Generic claim = 40.</li>
+                <li><strong>Reserve Ratio (10%):</strong> ≥100.1% = 100; 100% = 95; ≥98% = 75; below = scaled to 0.</li>
+            </ul>
+
+            <h3>3. Liquidity &amp; Market Depth (15%)</h3>
+            <ul>
+                <li><strong>Volume/MCap Ratio (30%):</strong> 24h volume ÷ market cap. &gt;20% = 100; &lt;0.5% = 5.</li>
+                <li><strong>Active Trading Pairs (20%):</strong> Count of pairs with &gt;$10k daily volume across exchanges.</li>
+                <li><strong>Bid-Ask Spread (25%):</strong> Measured on Binance order book. &lt;0.01% = 100; &gt;0.5% = 10.</li>
+                <li><strong>On-Chain TVL (25%):</strong> DEX liquidity from DeFiLlama. &gt;$500M = 100; unknown = 40 (conservative fallback, not penalty).</li>
+            </ul>
+
+            <h3>4. Management &amp; Transparency (15%)</h3>
+            <ul>
+                <li><strong>Regulatory Status (25%):</strong> NYDFS/NYFDFS license = 100; EU MiCA/MAS = 85; Tier-2 jurisdiction = 60; none = 30.</li>
+                <li><strong>Audit History (20%):</strong> Proxy: attestation quality. 3+ Tier-1 = 100; 0 = 20.</li>
+                <li><strong>Team Track Record (20%):</strong> &gt;5 years clean = 100; &gt;3 = 80; &gt;1 = 60; &lt;1 = 30.</li>
+                <li><strong>Historical Enforcement (20%):</strong> No actions = 100; settlements &lt;$10M = 60; $10–100M = 30; &gt;$100M = 10.</li>
+                <li><strong>Systemic Risk Multiplier (variable):</strong> Stablecoins ≥$10B mcap: −4 if management &lt;60. Stablecoins ≥$50B: additional −10 if management &lt;50. Reflects that USDT ($184B) failure = crypto market failure.</li>
+            </ul>
+
+            <h3>5. Smart Contract Security (10%)</h3>
+            <ul>
+                <li><strong>Audit Status (40%):</strong> Tier-1 audit (OpenZeppelin, Trail of Bits, Consensys) = 100; other = 70; unaudited = 25.</li>
+                <li><strong>Known Exploits (30%):</strong> No exploits = 100; exploit &lt;$10k = 70; &gt;$1M = 5.</li>
+                <li><strong>Upgradeability (30%):</strong> Non-upgradeable or timelock = 100; multisig upgrade = 70; single-key upgrade = 30; has pause function = 40.</li>
+            </ul>
+
+            <h3>6. Decentralization &amp; Censorship Resistance (5%)</h3>
+            <ul>
+                <li><strong>Chain Diversity (40%):</strong> 4+ chains = 100; 2–3 = 80; 1 = 40.</li>
+                <li><strong>On-Chain Minting (30%):</strong> Permissionless = 100; issuer-controlled = 50.</li>
+                <li><strong>Freeze/Pause Capability (30%):</strong> No freeze = 100; freeze with timelock = 60; immediate freeze = 30; has frozen before = 10.</li>
+            </ul>
+
+            <h2 id="scoring">Scoring Scale</h2>
+            <p>Both letter grades (human-readable) and numeric scores (0–100, algorithm-ready) are derived from the same underlying computation. Letter grades map to fixed numeric boundaries.</p>
+
+            <table class="grade-table">
+                <thead>
+                    <tr><th>Grade</th><th>Numeric Range</th><th>Meaning</th><th>Typical Profile</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>A+</td><td>97–100</td><td>Exceptional</td><td>Among the safest stablecoins globally</td></tr>
+                    <tr><td>A</td><td>90–96</td><td>Excellent</td><td>Very low risk; near-optimal across all pillars</td></tr>
+                    <tr><td>A-</td><td>85–89</td><td>Very Good</td><td>Minor concerns; strong fundamentals</td></tr>
+                    <tr><td>B+</td><td>80–84</td><td>Good</td><td>Moderate risk; mostly safe for use</td></tr>
+                    <tr><td>B</td><td>73–79</td><td>Fair</td><td>Some concerns present</td></tr>
+                    <tr><td>B-</td><td>67–72</td><td>Acceptable</td><td>Notable concerns; monitor closely</td></tr>
+                    <tr><td>C+</td><td>60–66</td><td>Speculative</td><td>Elevated risk; may depeg under stress</td></tr>
+                    <tr><td>C</td><td>53–59</td><td>Highly Speculative</td><td>Significant structural concerns</td></tr>
+                    <tr><td>C-</td><td>47–52</td><td>Very Speculative</td><td>Major concerns; near-default risk</td></tr>
+                    <tr><td>D+</td><td>40–46</td><td>Poor</td><td>Serious structural weaknesses</td></tr>
+                    <tr><td>D</td><td>30–39</td><td>Very Poor</td><td>Near-default likelihood</td></tr>
+                    <tr><td>D-</td><td>0–29</td><td>Critical</td><td>Essentially in default or already depegged</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="weights">Type-Specific Weight Profiles</h2>
+            <p>Different stablecoin architectures carry different risk profiles. The primary weights apply to fiat-backed USD stablecoins. Other types use adjusted weights:</p>
+
+            <table class="weight-table">
+                <thead>
+                    <tr><th>Type</th><th>Peg</th><th>Reserve</th><th>Liquidity</th><th>Management</th><th>SC Security</th><th>Decentralization</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Fiat-backed USD</td><td>30%</td><td>25%</td><td>15%</td><td>15%</td><td>10%</td><td>5%</td></tr>
+                    <tr><td>Crypto-backed (over-collateralized)</td><td>30%</td><td>20%</td><td>10%</td><td>10%</td><td>15%</td><td>15%</td></tr>
+                    <tr><td>Algorithmic / Reflex</td><td>35%</td><td>15%</td><td>15%</td><td>15%</td><td>10%</td><td>10%</td></tr>
+                    <tr><td>Gold-backed</td><td>15%</td><td>30%</td><td>15%</td><td>15%</td><td>10%</td><td>15%</td></tr>
+                    <tr><td>Non-USD fiat (EUR/SGD/MXN)</td><td>30%</td><td>25%</td><td>15%</td><td>15%</td><td>10%</td><td>5%</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="sources">Data Sources</h2>
+            <p>All data is sourced from free, public APIs. No paid data subscriptions are used.</p>
+
+            <table class="weight-table">
+                <thead>
+                    <tr><th>Source</th><th>Data Provided</th><th>Rate Limit (Free)</th><th>Key Needed</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>CoinGecko</strong></td><td>Price, market cap, volume, exchange list, contract addresses</td><td>10–30/min</td><td>No</td></tr>
+                    <tr><td><strong>Binance</strong></td><td>Bid-ask spread, 24h ticker, order book</td><td>1200/min (public)</td><td>No</td></tr>
+                    <tr><td><strong>DeFiLlama</strong></td><td>DEX TVL by contract address</td><td>30/min</td><td>No</td></tr>
+                    <tr><td><strong>Etherscan</strong></td><td>Contract source code, audit flags, upgrade functions</td><td>5/sec</td><td>Recommended (free key)</td></tr>
+                    <tr><td><strong>Issuer disclosures</strong></td><td>Reserve attestations, regulatory licenses, audit reports</td><td>N/A</td><td>No</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="fallbacks">Fallback Logic</h2>
+            <p>If primary and secondary sources fail, the pipeline applies conservative defaults and appends a WARN_ flag. Each pillar is scored independently — an unknown reserve quality does not penalize peg stability.</p>
+
+            <table class="weight-table">
+                <thead>
+                    <tr><th>Pillar</th><th>Primary Fallback</th><th>Conservative Default</th><th>Flag Added</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Peg Stability</td><td>Binance avgPrice</td><td>50/100</td><td>WARN_No_price_history</td></tr>
+                    <tr><td>Reserve Quality</td><td>Issuer website</td><td>30/100</td><td>WARN_No_attestation</td></tr>
+                    <tr><td>Liquidity</td><td>Binance volume</td><td>40/100</td><td>WARN_No_market_data</td></tr>
+                    <tr><td>Management</td><td>Press releases</td><td>40/100</td><td>WARN_Regulatory_unverified</td></tr>
+                    <tr><td>Smart Contract</td><td>Etherscan flag</td><td>30/100</td><td>WARN_Contract_unverified</td></tr>
+                    <tr><td>Decentralization</td><td>CoinGecko platforms</td><td>50/100</td><td>WARN_Chain_unknown</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="benchmarks">Benchmark Comparison</h2>
+            <p>The framework was validated against Bluechip (bluechip.org/en) — a leading independent stablecoin rating platform. Live validation across 17 coins shows:</p>
+            <ul>
+                <li><strong>4/13 exact letter-grade matches</strong> (DAI B+, USDC B+, FRAX B-, BUSD C)</li>
+                <li><strong>9/13 within 1 letter grade</strong> — divergences are explainable by rate-limit gaps, coin type mismatch, or documented editorial overlays</li>
+                <li><strong>Primary divergence:</strong> CoinGecko free-tier rate limits prevent real price history from being fetched for all coins simultaneously. Production pipeline with staggered requests resolves this.</li>
+                <li><strong>USDT gap:</strong> Bluechip rates USDT D (editorial systemic-risk premium). Our framework produces C, which is algorithmically correct. The D-grade requires an explicit editorial policy rule, not a data fix.</li>
+            </ul>
+
+            <h2 id="changelog">Version History</h2>
+            <table class="weight-table">
+                <thead>
+                    <tr><th>Version</th><th>Date</th><th>Change</th><th>Reason</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>v1.0</td><td>Apr 2026</td><td>Initial framework — 6 pillars, free API sources, letter grades</td><td>First build</td></tr>
+                    <tr><td>v1.1</td><td>Apr 2026</td><td>Added enforcement history (4.4), systemic risk multiplier (4.5), bankruptcy-remote cap rule (2.4), crypto collateral bonus (2.1), severe depeg rule (1.1), coin type classifier</td><td>Live validation against Bluechip revealed gaps: USDT too generous, USDC reserve too high, BEAN depeg undetected</td></tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__brand">
+            <div class="footer__brand-name">StablecoinRatings.org</div>
+            <div class="footer__brand-desc">Independent stablecoin risk evaluation. Transparent methodology. Open data.</div>
+        </div>
+        <div>
+            <div class="footer__col-title">Methodology</div>
+            <ul class="footer__links">
+                <li><a href="/methodology.html#pillars">Six Pillars</a></li>
+                <li><a href="/methodology.html#scoring">Scoring Scale</a></li>
+                <li><a href="/methodology.html#weights">Weight Profile</a></li>
+                <li><a href="/methodology.html#sources">Data Sources</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer__col-title">Data</div>
+            <ul class="footer__links">
+                <li><a href="/data.html">Open Data Access</a></li>
+                <li><a href="/history.html">Rating History</a></li>
+                <li><a href="https://github.com/rurogge/stablecoinratings_website" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <span>StablecoinRatings.org — Public methodology, open data, independent analysis.</span>
+        <span>v1.1 — Updated April 2026</span>
+    </div>
+</footer>
+
+<script>
+    // Theme toggle (same as app.js)
+    (function() {
+        const stored = localStorage.getItem("scr_theme");
+        const preferred = stored || (window.matchMedia("(prefers-color: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", preferred);
+        document.getElementById("themeToggle").addEventListener("click", function() {
+            const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("scr_theme", next);
+            var sun = document.querySelector(".icon-sun"), moon = document.querySelector(".icon-moon");
+            if (next === "dark") { sun.style.display = ""; moon.style.display = "none"; }
+            else { sun.style.display = "none"; moon.style.display = ""; }
+        });
+        if (preferred === "light") {
+            document.querySelector(".icon-sun").style.display = "none";
+            document.querySelector(".icon-moon").style.display = "";
+        }
+    })();
+
+    // TOC active highlighting
+    var sections = document.querySelectorAll(".methodology-content h2[id]");
+    var navLinks = document.querySelectorAll(".methodology-toc__nav a");
+    window.addEventListener("scroll", function() {
+        var scrollY = window.scrollY + 80;
+        sections.forEach(function(sec) {
+            if (scrollY >= sec.offsetTop) {
+                navLinks.forEach(function(a) { a.classList.remove("active"); });
+                var active = document.querySelector('.methodology-toc__nav a[href="#' + sec.id + '"]');
+                if (active) active.classList.add("active");
+            }
+        });
+    });
+</script>
+</body>
+</html>

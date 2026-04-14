@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Independent stablecoin risk ratings. Transparent methodology, open data, daily updates.">
+    <title>StablecoinRatings — The Independent Risk Layer for Stablecoins</title>
+
+    <!-- Favicon: SVG shield with "S" -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0b0e'/><path d='M16 4L6 8.5v9c0 5.5 4.3 10.6 10 12 5.7-1.4 10-6.5 10-12V8.5L16 4z' fill='none' stroke='%233b82f6' stroke-width='2'/><text x='16' y='21' font-size='14' font-weight='bold' fill='%233b82f6' text-anchor='middle' font-family='monospace'>S</text></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        /* ── Grade color helpers ─────────────────────────────────────────── */
+        .bar-fill-a { background: var(--grade-a); }
+        .bar-fill-b { background: var(--grade-b); }
+        .bar-fill-c { background: var(--grade-c); }
+        .bar-fill-d { background: var(--grade-d); }
+
+        .text-grade-a { color: var(--grade-a); }
+        .text-grade-b { color: var(--grade-b); }
+        .text-grade-c { color: var(--grade-c); }
+        .text-grade-d { color: var(--grade-d); }
+
+        /* ── Inline status indicator ─────────────────────────────────────── */
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+            padding: var(--space-4) var(--space-6);
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .status-row strong { color: var(--text-secondary); }
+        .status-live {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-live-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--grade-a);
+            animation: pulse 2s infinite;
+        }
+
+        /* ── Data attribution ─────────────────────────────────────────────── */
+        .data-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: var(--space-4);
+            padding: 0 var(--space-2);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────────────── -->
+<nav class="nav">
+    <div class="nav__inner">
+        <a href="/index.html" class="nav__logo">
+            <svg class="nav__logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 3L5 8v10c0 6.6 4.7 12.7 11 14 6.3-1.3 11-7.4 11-14V8L16 3z" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
+                <path d="M11 17l3 3 7-7" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+                <div class="nav__logo-text">StablecoinRatings</div>
+                <div class="nav__logo-sub">Independent Risk Layer</div>
+            </div>
+        </a>
+
+        <ul class="nav__links">
+            <li><a href="/index.html" class="active">Ratings</a></li>
+            <li><a href="/methodology.html">Methodology</a></li>
+            <li><a href="/history.html">History</a></li>
+            <li><a href="/data.html">Open Data</a></li>
+        </ul>
+
+        <div class="nav__actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <!-- Sun icon (shown in dark mode) -->
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+                <!-- Moon icon (shown in light mode) -->
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" style="display:none">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────────────── -->
+<section class="hero">
+    <div class="hero__eyebrow">
+        <span class="hero__eyebrow-dot"></span>
+        Live Ratings — Updated Daily
+    </div>
+    <h1 class="hero__title">
+        The Independent<br>
+        <span class="hero__title-accent">Risk Layer</span> for Stablecoins
+    </h1>
+    <p class="hero__tagline">
+        Professional-grade stablecoin evaluation built on transparent,
+        observable data. No black boxes. No subjective overrides.
+    </p>
+    <div class="hero__meta">
+        <div class="hero__meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Daily refresh
+        </div>
+        <div class="hero__meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            Public methodology v1.1
+        </div>
+        <div class="hero__meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Free &amp; open data
+        </div>
+    </div>
+</section>
+
+<!-- ── Stats bar ───────────────────────────────────────────────────────── -->
+<div class="page">
+    <div class="stats-bar" id="statsBar">
+        <div class="stats-bar__item">
+            <div class="stats-bar__value" id="statCoins">—</div>
+            <div class="stats-bar__label">Coins Rated</div>
+        </div>
+        <div class="stats-bar__item">
+            <div class="stats-bar__value" id="statA">—</div>
+            <div class="stats-bar__label">A-Rated</div>
+        </div>
+        <div class="stats-bar__item">
+            <div class="stats-bar__value" id="statB">—</div>
+            <div class="stats-bar__label">B-Rated</div>
+        </div>
+        <div class="stats-bar__item">
+            <div class="stats-bar__value" id="statC">—</div>
+            <div class="stats-bar__label">C/D-Rated</div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Charts ──────────────────────────────────────────────────────────── -->
+<div class="page">
+    <div class="chart-section" style="margin-bottom: var(--space-6);">
+        <div class="chart-card">
+            <div class="chart-card__title">Score Distribution</div>
+            <canvas id="distChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <div class="chart-card__title">Market Cap by Coin</div>
+            <canvas id="mcapChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- ── Ratings Table ───────────────────────────────────────────────────── -->
+<div class="page">
+    <div class="filters">
+        <div class="tab-group" id="tableTabs">
+            <button class="tab active" data-table="usd">USD Stablecoins</button>
+            <button class="tab" data-table="nonusd">Non-USD &amp; Commodities</button>
+        </div>
+        <span class="data-note" id="dataNote"></span>
+    </div>
+
+    <!-- USD Table -->
+    <div id="usdTable">
+        <div class="table-wrap">
+            <table id="mainTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Coin</th>
+                        <th data-tooltip="Letter grade based on weighted pillar scores">Grade</th>
+                        <th data-tooltip="Overall numeric score (0-100)">Score</th>
+                        <th data-tooltip="Peg stability — 30% weight">Peg</th>
+                        <th data-tooltip="Reserve quality — 25% weight">Res</th>
+                        <th data-tooltip="Liquidity &amp; market depth — 15% weight">Liq</th>
+                        <th data-tooltip="Management &amp; transparency — 15% weight">Mgmt</th>
+                        <th data-tooltip="Smart contract security — 10% weight">SC</th>
+                        <th data-tooltip="Decentralization — 5% weight">Dec</th>
+                        <th data-tooltip="Market capitalization">Mkt Cap</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodyUSD"><!-- populated by JS --></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Non-USD Table -->
+    <div id="nonusdTable" style="display:none;">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Coin</th>
+                        <th>Type</th>
+                        <th>Grade</th>
+                        <th>Score</th>
+                        <th>Mkt Cap</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodyNonUSD"><!-- populated by JS --></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Skeleton loader (shown while fetching) -->
+    <div id="skeletonLoader">
+        <div class="skeleton skeleton-row" style="width:100%"></div>
+        <div class="skeleton skeleton-row" style="width:90%"></div>
+        <div class="skeleton skeleton-row" style="width:95%"></div>
+        <div class="skeleton skeleton-row" style="width:80%"></div>
+        <div class="skeleton skeleton-row" style="width:92%"></div>
+    </div>
+</div>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────── -->
+<footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__brand">
+            <div class="footer__brand-name">StablecoinRatings.org</div>
+            <div class="footer__brand-desc">
+                Independent stablecoin risk evaluation for investors,
+                developers, institutions, and researchers.
+            </div>
+        </div>
+        <div>
+            <div class="footer__col-title">Methodology</div>
+            <ul class="footer__links">
+                <li><a href="/methodology.html#pillars">Six Pillars</a></li>
+                <li><a href="/methodology.html#scoring">Scoring Scale</a></li>
+                <li><a href="/methodology.html#weights">Weight Profile</a></li>
+                <li><a href="/methodology.html#sources">Data Sources</a></li>
+                <li><a href="/methodology.html#fallbacks">Fallback Logic</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer__col-title">Data</div>
+            <ul class="footer__links">
+                <li><a href="/data.html">Open Data Access</a></li>
+                <li><a href="/history.html">Rating History</a></li>
+                <li><a href="/methodology.html#changelog">Version History</a></li>
+                <li><a href="https://github.com/rurogge/stablecoinratings_website" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <span>StablecoinRatings.org — Public methodology, open data, independent analysis.</span>
+        <span>Data: CoinGecko, Binance, DeFiLlama (all free APIs)</span>
+    </div>
+</footer>
+
+<!-- ── Coin Detail Modal ─────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true">
+        <div class="modal__header">
+            <div>
+                <div class="modal__title" id="modalTitle">—</div>
+                <div class="modal__subtitle" id="modalSubtitle">—</div>
+            </div>
+            <button class="modal__close" id="modalClose" aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="modal__body">
+            <div class="modal__section">
+                <div class="modal__section-title">Overall Rating</div>
+                <div style="display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-5);">
+                    <div class="grade-badge grade-badge--large" id="modalGrade">—</div>
+                    <div>
+                        <div style="font-size:28px;font-weight:800;font-family:var(--font-mono);" id="modalScore">—</div>
+                        <div style="font-size:12px;color:var(--text-muted);" id="modalRank">Rank #—</div>
+                    </div>
+                </div>
+                <!-- Sparkline -->
+                <canvas id="modalSparkline" height="80" style="max-height:80px;"></canvas>
+            </div>
+
+            <div class="modal__section">
+                <div class="modal__section-title">Pillar Scores</div>
+                <div class="pillar-grid" id="modalPillars"><!-- populated by JS --></div>
+            </div>
+
+            <div class="modal__section">
+                <div class="modal__section-title">Key Metrics</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);" id="modalMetrics">
+                    <!-- populated by JS -->
+                </div>
+            </div>
+
+            <div class="modal__section" id="modalFlagsSection" style="display:none;">
+                <div class="modal__section-title">Data Warnings</div>
+                <div id="modalFlags"></div>
+            </div>
+        </div>
+        <div class="modal__footer">
+            <span id="modalFooter">—</span>
+        </div>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

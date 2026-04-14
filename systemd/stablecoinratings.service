@@ -1,0 +1,22 @@
+[Unit]
+Description=StablecoinRatings Data Pipeline
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/stablecoinratings-runner
+WorkingDirectory=/root/stablecoinratings
+StandardOutput=journal
+StandardError=journal
+User=root
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/root/stablecoinratings
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Data — StablecoinRatings</title>
+    <meta name="description" content="Download raw stablecoin ratings data. JSON, updated daily.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0b0e'/><path d='M16 4L6 8.5v9c0 5.5 4.3 10.6 10 12 5.7-1.4 10-6.5 10-12V8.5L16 4z' fill='none' stroke='%233b82f6' stroke-width='2'/><text x='16' y='21' font-size='14' font-weight='bold' fill='%233b82f6' text-anchor='middle' font-family='monospace'>S</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .api-endpoint { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-5);margin-bottom:var(--space-4); }
+        .api-endpoint__url { font-family:var(--font-mono);font-size:13px;color:var(--accent);margin-bottom:var(--space-3);word-break:break-all; }
+        .api-endpoint__desc { font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-3); }
+        .api-endpoint__example { background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--space-3);font-family:var(--font-mono);font-size:12px;color:var(--text-muted);max-height:120px;overflow:auto; }
+        .download-btn { display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);background:var(--accent);color:#fff;border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:background var(--transition);text-decoration:none; }
+        .download-btn:hover { background:var(--accent-hover);color:#fff; }
+        .download-btn--secondary { background:var(--bg-tertiary);color:var(--text-secondary);border:1px solid var(--border); }
+        .download-btn--secondary:hover { background:var(--bg-card-hover);color:var(--text-primary); }
+        .code-block { background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-5);font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);line-height:1.8;overflow-x:auto;white-space:pre; }
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <div class="nav__inner">
+        <a href="/index.html" class="nav__logo">
+            <svg class="nav__logo-mark" viewBox="0 0 32 32" fill="none"><path d="M16 3L5 8v10c0 6.6 4.7 12.7 11 14 6.3-1.3 11-7.4 11-14V8L16 3z" fill="none" stroke="var(--accent)" stroke-width="1.8"/><path d="M11 17l3 3 7-7" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><div class="nav__logo-text">StablecoinRatings</div><div class="nav__logo-sub">Independent Risk Layer</div></div>
+        </a>
+        <ul class="nav__links">
+            <li><a href="/index.html">Ratings</a></li>
+            <li><a href="/methodology.html">Methodology</a></li>
+            <li><a href="/history.html">History</a></li>
+            <li><a href="/data.html" class="active">Open Data</a></li>
+        </ul>
+        <div class="nav__actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="page">
+    <div style="max-width:860px;margin:0 auto;">
+        <div style="margin-bottom:var(--space-10);">
+            <h1 style="font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:var(--space-3);">Open Data Access</h1>
+            <p style="font-size:16px;color:var(--text-secondary);line-height:1.6;">All ratings data is freely available as JSON. No API key required. Updated daily by the StablecoinRatings pipeline.</p>
+        </div>
+
+        <!-- Download cards -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-8);">
+            <div class="api-endpoint">
+                <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:var(--space-2);">Full Ratings</div>
+                <div class="api-endpoint__url">/data/ratings_full.json</div>
+                <div class="api-endpoint__desc">Complete ratings with all pillar scores, sub-scores, sparklines, and metadata for every coin.</div>
+                <a href="data/ratings_full.json" download class="download-btn" target="_blank">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    Download JSON
+                </a>
+            </div>
+            <div class="api-endpoint">
+                <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:var(--space-2);">Grades Only</div>
+                <div class="api-endpoint__url">/data/grades.json</div>
+                <div class="api-endpoint__desc">Compact coin → grade/score lookup. Ideal for algorithmic consumers. Includes mcap and rank.</div>
+                <a href="data/grades.json" download class="download-btn" target="_blank">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    Download JSON
+                </a>
+            </div>
+            <div class="api-endpoint" style="grid-column:1/-1;">
+                <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:var(--space-2);">Historical Archive</div>
+                <div class="api-endpoint__url">/data/history.json</div>
+                <div class="api-endpoint__desc">365-day rolling archive of all score snapshots. Each entry includes full pillar breakdown per coin per day.</div>
+                <a href="data/history.json" download class="download-btn" target="_blank">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    Download JSON
+                </a>
+            </div>
+        </div>
+
+        <!-- API usage example -->
+        <h2 style="font-size:18px;font-weight:700;margin-bottom:var(--space-4);">Usage Example</h2>
+        <div class="code-block">// Fetch latest ratings
+fetch('https://stablecoinratings.org/data/grades.json')
+  .then(r => r.json())
+  .then(data => {
+    for (const [symbol, info] of Object.entries(data.coins)) {
+      console.log(`${symbol}: ${info.grade} (${info.score})`);
+    }
+  });
+
+// Historical score for a specific coin
+fetch('https://stablecoinratings.org/data/history.json')
+  .then(r => r.json())
+  .then(hist => {
+    const latest = hist.versions[hist.versions.length - 1];
+    console.log('USDT peg score:', latest.coins.USDT.peg);
+  });</div>
+
+        <!-- Data schema -->
+        <h2 style="font-size:18px;font-weight:700;margin:var(--space-8) 0 var(--space-4);">Schema Reference</h2>
+        <div class="code-block">// ratings_full.json — structure
+{
+  "version": "1.1",                        // methodology version
+  "run_id": "2026-04-13T02:00:00Z",       // ISO 8601 timestamp
+  "methodology": "https://stablecoinratings.org/methodology",
+  "data_sources": ["CoinGecko","Binance","DeFiLlama"],
+  "usd_stablecoins": [
+    {
+      "symbol": "USDT",
+      "name": "Tether",
+      "type": "usd_fiat",
+      "mcap": 184490000000,
+      "vol_24h": 52000000000,
+      "price": 1.0001,
+      "rank": 3,
+      "peg": 98.2,          // pillar 1
+      "reserve": 54.8,      // pillar 2
+      "liquidity": 81.2,    // pillar 3
+      "management": 45.5,   // pillar 4
+      "smart_contract": 58.0, // pillar 5
+      "decentralization": 64.0, // pillar 6
+      "systemic_penalty": -13,
+      "total": 63.2,
+      "letter": "C+",
+      "weights_used": {"peg":0.30,"res":0.25,"liq":0.15,"mgmt":0.15,"sc":0.10,"dec":0.05},
+      "flags": [],          // WARN_* flags if data was missing
+      "sub_scores": {      // raw metric inputs
+        "peg_dev_avg": 0.0023,
+        "peg_dev_max": 0.05,
+        "peg_depeg_days": 0,
+        "liq_spread_pct": 0.01,
+        "liq_exchanges": 53,
+        "liq_tvl": null
+      },
+      "backing": "fiat",
+      "regulatory": "none",
+      "attestation": "quarterly_opaque",
+      "enforcement": "nyag_18.5m",
+      "age_yrs": 11,
+      "chains": 7,
+      "has_pause": true,
+      "sparkline": [1.0001,0.9999,...],  // last 30 price points
+      "last_updated": "2026-04-13T02:00:00Z"
+    }
+  ],
+  "non_usd_stablecoins": [ /* same structure */ ]
+}
+
+// grades.json — structure
+{
+  "version": "2026-04-13T02:00:00Z",
+  "coins": {
+    "USDT": { "grade": "C+", "score": 63.2, "mcap": 184490000000, "rank": 3, "type": "usd_fiat" }
+  }
+}
+
+// history.json — structure
+{
+  "versions": [
+    {
+      "date": "2026-04-13T02:00:00Z",
+      "coins": {
+        "USDT": { "letter":"C+","total":63.2,"peg":98.2,"reserve":54.8,"liquidity":81.2,"management":45.5,"smart_contract":58.0,"decentralization":64.0,"systemic_penalty":-13 }
+      }
+    }
+  ]
+}</div>
+
+        <!-- Attribution -->
+        <div style="margin-top:var(--space-8);padding:var(--space-5);background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-md);">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-2);">Data Attribution</div>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Data sourced from CoinGecko, Binance, and DeFiLlama public APIs. StablecoinRatings publishes this aggregated analysis under the Creative Commons Attribution 4.0 license. Attribution: "StablecoinRatings.org — independent stablecoin risk analysis."</p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer__bottom" style="border-top:1px solid var(--border);padding-top:var(--space-6);max-width:var(--max-width);margin:0 auto;">
+        <span>StablecoinRatings.org</span>
+        <span>Data: CoinGecko, Binance, DeFiLlama · CC BY 4.0</span>
+    </div>
+</footer>
+
+<script>
+(function() {
+    var stored = localStorage.getItem("scr_theme") || (window.matchMedia("(prefers-color: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", stored);
+    document.getElementById("themeToggle").addEventListener("click", function() {
+        var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("scr_theme", next);
+    });
+})();
+</script>
+</body>
+</html>

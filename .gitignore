@@ -1,0 +1,25 @@
+# Pipeline outputs — generated daily, not tracked
+data/ratings_full.json
+data/grades.json
+data/history.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Logs
+*.log
+pipeline.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Lock files
+.pipeline.lock
+
+# Node (if any future frontend build)
+node_modules/
