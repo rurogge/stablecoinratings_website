@@ -1,131 +1,110 @@
 {
-  "version": "2026-04-13T02:00:00Z",
+  "version": "2026-04-17T21:54:03Z",
   "coins": {
-    "USDP": {
-      "grade": "B+",
-      "score": 84.6,
-      "mcap": 40600000,
-      "rank": 1,
+    "USDT": {
+      "grade": "C",
+      "score": 59.9,
+      "mcap": 185851710160,
+      "rank": 3,
+      "type": "usd_fiat"
+    },
+    "USDC": {
+      "grade": "A-",
+      "score": 86.5,
+      "mcap": 78545328000,
+      "rank": 6,
       "type": "usd_fiat"
     },
     "DAI": {
       "grade": "B+",
-      "score": 84.2,
-      "mcap": 4380000000,
-      "rank": 2,
+      "score": 84.7,
+      "mcap": 4337038785,
+      "rank": 26,
       "type": "usd_crypto"
     },
-    "USDC": {
-      "grade": "B+",
-      "score": 84.1,
-      "mcap": 78740000000,
-      "rank": 3,
+    "PYUSD": {
+      "grade": "C",
+      "score": 57.6,
+      "mcap": 4100663305,
+      "rank": 29,
       "type": "usd_fiat"
-    },
-    "GUSD": {
-      "grade": "B",
-      "score": 79.6,
-      "mcap": 44400000,
-      "rank": 4,
-      "type": "usd_fiat"
-    },
-    "FRAX": {
-      "grade": "B-",
-      "score": 72.1,
-      "mcap": 274400000,
-      "rank": 5,
-      "type": "usd_crypto"
     },
     "USDD": {
       "grade": "C+",
-      "score": 64.9,
-      "mcap": 1500000000,
-      "rank": 6,
+      "score": 65.4,
+      "mcap": 1543765814,
+      "rank": 55,
       "type": "usd_crypto"
     },
     "TUSD": {
       "grade": "C+",
-      "score": 64.8,
-      "mcap": 494500000,
-      "rank": 7,
+      "score": 66.9,
+      "mcap": 494211005,
+      "rank": 105,
       "type": "usd_fiat"
     },
-    "PYUSD": {
+    "FDUSD": {
+      "grade": "C",
+      "score": 59.3,
+      "mcap": 413659591,
+      "rank": 117,
+      "type": "usd_fiat"
+    },
+    "FRAX": {
       "grade": "C+",
-      "score": 61.3,
-      "mcap": 4020000000,
-      "rank": 8,
-      "type": "usd_fiat"
-    },
-    "USDT": {
-      "grade": "C",
-      "score": 58.2,
-      "mcap": 184490000000,
-      "rank": 9,
-      "type": "usd_fiat"
-    },
-    "PAXG": {
-      "grade": "C",
-      "score": 57.0,
-      "mcap": 2400000000,
-      "rank": 10,
-      "type": "gold"
-    },
-    "XAUT": {
-      "grade": "C",
-      "score": 57.0,
-      "mcap": 2630000000,
-      "rank": 11,
-      "type": "gold"
+      "score": 65.0,
+      "mcap": 274449199,
+      "rank": 152,
+      "type": "usd_crypto"
     },
     "BUSD": {
       "grade": "C",
       "score": 56.6,
-      "mcap": 39900000,
-      "rank": 12,
+      "mcap": 40112919,
+      "rank": 554,
       "type": "usd_fiat"
-    },
-    "FDUSD": {
-      "grade": "D+",
-      "score": 46.9,
-      "mcap": 400700000,
-      "rank": 13,
-      "type": "usd_fiat"
-    },
-    "OGN": {
-      "grade": "D+",
-      "score": 44.1,
-      "mcap": 14100000,
-      "rank": 14,
-      "type": "usd_crypto"
-    },
-    "SEUR": {
-      "grade": "D+",
-      "score": 43.6,
-      "mcap": 0,
-      "rank": 15,
-      "type": "eur_fiat"
-    },
-    "BEAN": {
-      "grade": "D",
-      "score": 38.0,
-      "mcap": 0,
-      "rank": 16,
-      "type": "usd_crypto"
     },
     "XSGD": {
       "grade": "C+",
-      "score": 66.5,
-      "mcap": 15000000,
+      "score": 65.8,
+      "mcap": 0,
       "rank": null,
       "type": "sgd_fiat"
     },
     "RAI": {
-      "grade": "C+",
-      "score": 63.3,
-      "mcap": 28000000,
-      "rank": null,
+      "grade": "C",
+      "score": 53.7,
+      "mcap": 1864954,
+      "rank": 2407,
       "type": "reflex"
+    },
+    "BEAN": {
+      "grade": "C+",
+      "score": 65.6,
+      "mcap": 0.0,
+      "rank": null,
+      "type": "usd_crypto"
+    },
+    "XAUT": {
+      "grade": "C",
+      "score": 58.8,
+      "mcap": 2695588979,
+      "rank": 37,
+      "type": "gold"
+    },
+    "PAXG": {
+      "grade": "C",
+      "score": 57.9,
+      "mcap": 2379868432,
+      "rank": 41,
+      "type": "gold"
+    },
+    "SEUR": {
+      "grade": "C",
+      "score": 58.0,
+      "mcap": 19632.42,
+      "rank": 8651,
+      "type": "eur_fiat"
     }
   }
 }
