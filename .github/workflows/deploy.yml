@@ -6,7 +6,7 @@ on:
     - cron: "30 2 * * *"
   # Also run on every push to main
   push:
-    branches: [main]
+    branches: [master]
   # Allow manual trigger
   workflow_dispatch:
 
