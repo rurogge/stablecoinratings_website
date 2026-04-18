@@ -1,13 +1,10 @@
 name: Deploy to Cloudflare Pages
 
 on:
-  # Run daily at 02:30 UTC (after pipeline at 02:00)
   schedule:
     - cron: "30 2 * * *"
-  # Also run on every push to main
   push:
     branches: [master]
-  # Allow manual trigger
   workflow_dispatch:
 
 jobs:
@@ -30,23 +27,16 @@ jobs:
       - name: Run pipeline
         run: python3 pipeline/pipeline.py
         env:
-          # Optional: set API keys if available as GitHub Secrets
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
           ETHERSCAN_API_KEY:  ${{ secrets.ETHERSCAN_API_KEY }}
 
-      - name: Preview data (print summary)
+      - name: Preview data
         run: |
           echo "=== Pipeline output ==="
-          cat data/grades.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(f'Coins rated: {len(d[\"coins\"])}')"
+          python3 -c "import json; d=json.load(open('data/grades.json')); print('Coins rated:', len(d['coins']))"
           echo "=== USD Stablecoin grades ==="
-          python3 -c "
-import json
-d=json.load(open('data/grades.json'))
-for sym,info in sorted(d['coins'].items(), key=lambda x: x[1]['score'], reverse=True):
-    print(f'  {sym}: {info[\"grade\"]} ({info[\"score\"]})')
-"
+          python3 -c "import json; [print(f'  {s}: {i["grade"]} ({i["score"]})') for s,i in sorted(json.load(open('data/grades.json'))['coins'].items(), key=lambda x:x[1]['score'], reverse=True)]"
 
-      # ── Deploy to Cloudflare Pages ─────────────────────────────────────
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
@@ -54,6 +44,3 @@ for sym,info in sorted(d['coins'].items(), key=lambda x: x[1]['score'], reverse=
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: stablecoinratings
           directory: site
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          # Cloudflare Pages build config (none needed — pure static)
-          # Wrangler config is in site/_wrangler.toml if needed
