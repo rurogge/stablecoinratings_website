@@ -32,15 +32,51 @@ jobs:
 
       - name: Preview data
         run: |
-          echo "=== Pipeline output ==="
-          python3 -c "import json; d=json.load(open('data/grades.json')); print('Coins rated:', len(d['coins']))"
-          echo "=== USD Stablecoin grades ==="
-          python3 -c "import json; [print(f'  {s}: {i["grade"]} ({i["score"]})') for s,i in sorted(json.load(open('data/grades.json'))['coins'].items(), key=lambda x:x[1]['score'], reverse=True)]"
+          echo "=== Coins rated ==="
+          python3 -c "import json; d=json.load(open('site/data/grades.json')); print(len(d['coins']),'coins')"
+          echo "=== Grades ==="
+          python3 -c "import json; [print(f'  {s}: {i[\"grade\"]} ({i[\"score\"]})') for s,i in sorted(json.load(open('site/data/grades.json'))['coins'].items(), key=lambda x:-x[1]['score'])]"
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: stablecoinratings
-          directory: site
+        run: |
+          set -e
+
+          API_TOKEN="${{ secrets.CLOUDFLARE_API_TOKEN }}"
+          ACCOUNT_ID="${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
+          PROJECT="stablecoinratings"
+
+          echo "Creating Cloudflare Pages deployment..."
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer $API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/$PROJECT/deployments")
+
+          DEPLOYMENT_ID=$(echo "$RESPONSE" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('result',{}).get('id',''))" 2>/dev/null)
+          UPLOAD_URL=$(echo "$RESPONSE" | python3 -c "import json,sys; print(json.load(sys.stdin).get('result',{}).get('upload_url',''))" 2>/dev/null)
+
+          if [ -z "$DEPLOYMENT_ID" ] || [ "$DEPLOYMENT_ID" = "None" ] || [ -z "$UPLOAD_URL" ] || [ "$UPLOAD_URL" = "None" ]; then
+            echo "Full API response: $RESPONSE"
+            echo "DEPLOYMENT_ID=$DEPLOYMENT_ID"
+            echo "UPLOAD_URL=$UPLOAD_URL"
+            echo "FAILED: Could not get Cloudflare Pages upload URL. Check project name and permissions."
+            exit 1
+          fi
+
+          echo "Deployment ID: $DEPLOYMENT_ID"
+          echo "Upload URL: $UPLOAD_URL"
+
+          echo "Uploading static files..."
+          tar -czf /tmp/pages-upload.tar.gz -C site .
+          UPLOAD_RESULT=$(curl -s -X PUT \
+            -H "Content-Type: application/gzip" \
+            --data-binary @/tmp/pages-upload.tar.gz \
+            "$UPLOAD_URL")
+          echo "Upload result: $UPLOAD_RESULT"
+
+          echo "Finalizing deployment..."
+          FINALIZE=$(curl -s -X POST \
+            -H "Authorization: Bearer $API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pages/projects/$PROJECT/deployments/$DEPLOYMENT_ID/finalize")
+
+          echo "$FINALIZE" | python3 -c "import json,sys; d=json.load(sys.stdin); print('Status:', d.get('result',{}).get('status','?'), '  URL:', d.get('result',{}).get('url','?'))"
