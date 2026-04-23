@@ -660,7 +660,10 @@ def run_pipeline():
     non_usd_stablecoins = sorted([r for r in results if r["type"] not in ("usd_fiat","usd_crypto")],
                                   key=lambda x: x["total"], reverse=True)
 
-    # Step 6: Write output files
+    # Step 6: Sort results by market cap descending for the homepage table
+    results = sorted(results, key=lambda x: x["mcap"] or 0, reverse=True)
+
+    # Step 7: Write output files
     timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     # Full data

@@ -29,6 +29,20 @@
       "rank": 32,
       "type": "usd_fiat"
     },
+    "XAUT": {
+      "grade": "C",
+      "score": 57.0,
+      "mcap": 2642715241,
+      "rank": 36,
+      "type": "gold"
+    },
+    "PAXG": {
+      "grade": "C",
+      "score": 57.0,
+      "mcap": 2296954317,
+      "rank": 41,
+      "type": "gold"
+    },
     "RLUSD": {
       "grade": "C+",
       "score": 62.4,
@@ -77,20 +91,6 @@
       "mcap": 1761659,
       "rank": 2434,
       "type": "reflex"
-    },
-    "XAUT": {
-      "grade": "C",
-      "score": 57.0,
-      "mcap": 2642715241,
-      "rank": 36,
-      "type": "gold"
-    },
-    "PAXG": {
-      "grade": "C",
-      "score": 57.0,
-      "mcap": 2296954317,
-      "rank": 41,
-      "type": "gold"
     },
     "SEUR": {
       "grade": "C",
