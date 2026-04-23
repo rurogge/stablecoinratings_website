@@ -1,67 +1,67 @@
 {
-  "version": "2026-04-17T21:54:03Z",
+  "version": "2026-04-23T16:48:50Z",
   "coins": {
     "USDT": {
       "grade": "C",
       "score": 59.9,
-      "mcap": 185851710160,
+      "mcap": 188858808226,
       "rank": 3,
       "type": "usd_fiat"
     },
     "USDC": {
       "grade": "A-",
-      "score": 86.5,
-      "mcap": 78545328000,
+      "score": 85.6,
+      "mcap": 78131640580,
       "rank": 6,
       "type": "usd_fiat"
     },
     "DAI": {
       "grade": "B+",
       "score": 84.7,
-      "mcap": 4337038785,
-      "rank": 26,
+      "mcap": 4428883721,
+      "rank": 23,
       "type": "usd_crypto"
     },
     "PYUSD": {
       "grade": "C",
       "score": 57.6,
-      "mcap": 4100663305,
-      "rank": 29,
+      "mcap": 3503154396,
+      "rank": 32,
       "type": "usd_fiat"
     },
     "USDD": {
       "grade": "C+",
-      "score": 65.4,
-      "mcap": 1543765814,
-      "rank": 55,
+      "score": 66.0,
+      "mcap": 1385359156,
+      "rank": 56,
       "type": "usd_crypto"
     },
     "TUSD": {
-      "grade": "C+",
-      "score": 66.9,
-      "mcap": 494211005,
-      "rank": 105,
+      "grade": "B-",
+      "score": 67.8,
+      "mcap": 493883831,
+      "rank": 102,
       "type": "usd_fiat"
     },
     "FDUSD": {
       "grade": "C",
       "score": 59.3,
-      "mcap": 413659591,
-      "rank": 117,
+      "mcap": 414994892,
+      "rank": 114,
       "type": "usd_fiat"
     },
     "FRAX": {
       "grade": "C+",
-      "score": 65.0,
-      "mcap": 274449199,
-      "rank": 152,
+      "score": 65.5,
+      "mcap": 274265129,
+      "rank": 148,
       "type": "usd_crypto"
     },
     "BUSD": {
       "grade": "C",
-      "score": 56.6,
-      "mcap": 40112919,
-      "rank": 554,
+      "score": 55.7,
+      "mcap": 39963792,
+      "rank": 548,
       "type": "usd_fiat"
     },
     "XSGD": {
@@ -74,8 +74,8 @@
     "RAI": {
       "grade": "C",
       "score": 53.7,
-      "mcap": 1864954,
-      "rank": 2407,
+      "mcap": 1764519,
+      "rank": 2436,
       "type": "reflex"
     },
     "BEAN": {
@@ -87,23 +87,23 @@
     },
     "XAUT": {
       "grade": "C",
-      "score": 58.8,
-      "mcap": 2695588979,
-      "rank": 37,
+      "score": 57.0,
+      "mcap": 2639276982,
+      "rank": 36,
       "type": "gold"
     },
     "PAXG": {
       "grade": "C",
-      "score": 57.9,
-      "mcap": 2379868432,
+      "score": 57.0,
+      "mcap": 2293839934,
       "rank": 41,
       "type": "gold"
     },
     "SEUR": {
       "grade": "C",
       "score": 58.0,
-      "mcap": 19632.42,
-      "rank": 8651,
+      "mcap": 19792.7,
+      "rank": 8637,
       "type": "eur_fiat"
     }
   }
