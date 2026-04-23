@@ -1,6 +1,6 @@
 {
   "version": "1.1",
-  "run_id": "2026-04-23T17:08:49Z",
+  "run_id": "2026-04-23T19:23:00Z",
   "methodology": "https://stablecoinratings.org/methodology",
   "data_sources": [
     "CoinGecko",
@@ -1957,55 +1957,6 @@
         0.996093
       ],
       "last_updated": "2026-04-23T17:08:49.726846+00:00"
-    },
-    {
-      "symbol": "XSGD",
-      "name": "XSGD",
-      "type": "sgd_fiat",
-      "mcap": 0,
-      "vol_24h": null,
-      "price": null,
-      "rank": null,
-      "peg": 50.0,
-      "reserve": 88.8,
-      "liquidity": 40.0,
-      "management": 85.2,
-      "smart_contract": 78.0,
-      "decentralization": 40.0,
-      "systemic_penalty": 0,
-      "total": 65.8,
-      "letter": "C+",
-      "weights_used": {
-        "peg": 0.3,
-        "res": 0.25,
-        "liq": 0.15,
-        "mgmt": 0.15,
-        "sc": 0.1,
-        "dec": 0.05
-      },
-      "flags": [
-        "WARN_No_price_history",
-        "WARN_No_market_data"
-      ],
-      "sub_scores": {
-        "peg_dev_avg": null,
-        "peg_dev_max": null,
-        "peg_depeg_days": null,
-        "peg_volatility": null,
-        "liq_spread_pct": null,
-        "liq_exchanges": 5,
-        "liq_tvl": null,
-        "liq_vmr": null
-      },
-      "backing": "fiat",
-      "regulatory": "mas",
-      "attestation": "monthly_good",
-      "enforcement": "none",
-      "age_yrs": 4,
-      "chains": 1,
-      "has_pause": true,
-      "sparkline": [],
-      "last_updated": "2026-04-23T17:08:49.726874+00:00"
     },
     {
       "symbol": "RAI",

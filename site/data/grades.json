@@ -71,13 +71,6 @@
       "rank": 549,
       "type": "usd_fiat"
     },
-    "XSGD": {
-      "grade": "C+",
-      "score": 65.8,
-      "mcap": 0,
-      "rank": null,
-      "type": "sgd_fiat"
-    },
     "RAI": {
       "grade": "C",
       "score": 53.7,
