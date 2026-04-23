@@ -64,7 +64,6 @@ COIN_META = {
     "FRAX":  {"name":"Frax",              "type":"usd_crypto","backing":"crypto","reg":"none",        "attest":"onchain_partial",       "enforcement":"none",         "chains":2,  "pause":False, "age":5,  "contracts":{"ethereum":"0x853d955acef822db058eb8505911ed77f175b99e"}},
     "BUSD":  {"name":"Binance USD",       "type":"usd_fiat",  "backing":"fiat",  "reg":"nyc",         "attest":"monthly",               "enforcement":"nyag_16m",     "chains":1,  "pause":True,  "age":4,  "contracts":{"ethereum":"0x4fabb145d64652a948d72533023fa6a75b4b4c8e"}},
     # Non-USD (excluded from primary table)
-    "XSGD":  {"name":"XSGD",              "type":"sgd_fiat",  "backing":"fiat",  "reg":"mas",         "attest":"monthly_good",          "enforcement":"none",         "chains":1,  "pause":True,  "age":4,  "contracts":{"ethereum":"0x70e8b6e13c6a4d1c2b3c3b3b3b3b3b3b3b3b3b3b3"}},
     "RAI":   {"name":"Rai Reflex Index",  "type":"reflex",    "backing":"crypto","reg":"dao",         "attest":"onchain",               "enforcement":"none",         "chains":1,  "pause":False, "age":4,  "contracts":{"ethereum":"0x03ab458634910aad14ef79b826c3e2e4a6d80e3"}},
     # Gold-backed
     "XAUT":  {"name":"Tether Gold",       "type":"gold",      "backing":"gold",  "reg":"none",        "attest":"quarterly",            "enforcement":"none",         "chains":3,  "pause":True,  "age":7,  "contracts":{"ethereum":"0x687496b65378f3f3a3f3f3f3f3f3f3f3f3f3f3f3f3"}},
@@ -77,7 +76,6 @@ COIN_META = {
 CG_IDS = {
     "USDT":"tether","USDC":"usd-coin","DAI":"dai","PYUSD":"paypal-usd",
     "USDD":"usdd","TUSD":"true-usd","FDUSD":"first-digital-usd","FRAX":"frax",
-    "BUSD":"binance-usd","XSGD":"xsrgd","RAI":"rai",
     "XAUT":"tether-gold","RLUSD":"ripple-usd","PAXG":"pax-gold","SEUR":"seur",
 }
 
