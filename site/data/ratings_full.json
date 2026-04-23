@@ -1,6 +1,6 @@
 {
   "version": "1.1",
-  "run_id": "2026-04-23T16:48:50Z",
+  "run_id": "2026-04-23T17:08:49Z",
   "methodology": "https://stablecoinratings.org/methodology",
   "data_sources": [
     "CoinGecko",
@@ -12,9 +12,9 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "type": "usd_fiat",
-      "mcap": 78131640580,
-      "vol_24h": 15389230317,
-      "price": 0.999862,
+      "mcap": 78126523990,
+      "vol_24h": 15359116490,
+      "price": 0.999826,
       "rank": 6,
       "peg": 100.0,
       "reserve": 86.5,
@@ -44,7 +44,7 @@
         "liq_spread_pct": 0.001,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.197
+        "liq_vmr": 0.1966
       },
       "backing": "fiat",
       "regulatory": "nydfs",
@@ -83,17 +83,17 @@
         0.999764,
         0.999796,
         0.999906,
-        0.999854
+        0.999824
       ],
-      "last_updated": "2026-04-23T16:48:50.003808+00:00"
+      "last_updated": "2026-04-23T17:08:49.726458+00:00"
     },
     {
       "symbol": "DAI",
       "name": "Dai",
       "type": "usd_crypto",
-      "mcap": 4428883721,
-      "vol_24h": 27259704,
-      "price": 0.999685,
+      "mcap": 4417517389,
+      "vol_24h": 28766052,
+      "price": 0.999719,
       "rank": 23,
       "peg": 96.2,
       "reserve": 87.2,
@@ -123,7 +123,7 @@
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0062
+        "liq_vmr": 0.0065
       },
       "backing": "crypto",
       "regulatory": "dao",
@@ -162,17 +162,17 @@
         0.999617,
         0.999666,
         0.99948,
-        0.999686
+        0.999738
       ],
-      "last_updated": "2026-04-23T16:48:50.003865+00:00"
+      "last_updated": "2026-04-23T17:08:49.726504+00:00"
     },
     {
       "symbol": "TUSD",
       "name": "TrueUSD",
       "type": "usd_fiat",
-      "mcap": 493883831,
-      "vol_24h": 10790694,
-      "price": 0.998681,
+      "mcap": 493738952,
+      "vol_24h": 10945655,
+      "price": 0.99851,
       "rank": 102,
       "peg": 97.0,
       "reserve": 52.5,
@@ -199,10 +199,10 @@
         "peg_dev_max": 0.4617,
         "peg_depeg_days": 0,
         "peg_volatility": 0.0303,
-        "liq_spread_pct": 0.02,
+        "liq_spread_pct": 0.01,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0218
+        "liq_vmr": 0.0222
       },
       "backing": "fiat",
       "regulatory": "none",
@@ -241,16 +241,16 @@
         0.998694,
         0.998479,
         0.998063,
-        0.998588
+        0.998386
       ],
-      "last_updated": "2026-04-23T16:48:50.004045+00:00"
+      "last_updated": "2026-04-23T17:08:49.726687+00:00"
     },
     {
       "symbol": "USDD",
       "name": "USDD",
       "type": "usd_crypto",
-      "mcap": 1385359156,
-      "vol_24h": 94118618,
+      "mcap": 1385352762,
+      "vol_24h": 92903227,
       "price": 1.0,
       "rank": 56,
       "peg": 100.0,
@@ -281,7 +281,7 @@
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0679
+        "liq_vmr": 0.0671
       },
       "backing": "crypto",
       "regulatory": "none",
@@ -320,97 +320,17 @@
         1.000099,
         1.000115,
         1.000197,
-        1.000269
+        1.000293
       ],
-      "last_updated": "2026-04-23T16:48:50.003980+00:00"
-    },
-    {
-      "symbol": "BEAN",
-      "name": "Bean",
-      "type": "usd_crypto",
-      "mcap": 0.0,
-      "vol_24h": 5622.79,
-      "price": 0.252806,
-      "rank": null,
-      "peg": 74.7,
-      "reserve": 57.0,
-      "liquidity": 40.0,
-      "management": 57.5,
-      "smart_contract": 80.0,
-      "decentralization": 67.0,
-      "systemic_penalty": 0,
-      "total": 65.6,
-      "letter": "C+",
-      "weights_used": {
-        "peg": 0.3,
-        "res": 0.2,
-        "liq": 0.1,
-        "mgmt": 0.1,
-        "sc": 0.15,
-        "dec": 0.15
-      },
-      "flags": [
-        "SEVERE_DEPEG",
-        "WARN_No_market_data"
-      ],
-      "sub_scores": {
-        "peg_dev_avg": 76.744,
-        "peg_dev_max": 78.9683,
-        "peg_depeg_days": 1993,
-        "peg_volatility": 0.4026,
-        "liq_spread_pct": null,
-        "liq_exchanges": 5,
-        "liq_tvl": null,
-        "liq_vmr": null
-      },
-      "backing": "crypto",
-      "regulatory": "none",
-      "attestation": "partial",
-      "enforcement": "none",
-      "age_yrs": 3,
-      "chains": 1,
-      "has_pause": false,
-      "sparkline": [
-        0.236803,
-        0.236551,
-        0.236676,
-        0.235979,
-        0.235969,
-        0.236257,
-        0.237551,
-        0.236372,
-        0.236053,
-        0.235699,
-        0.235948,
-        0.236842,
-        0.236607,
-        0.236347,
-        0.238777,
-        0.253021,
-        0.253022,
-        0.252882,
-        0.254019,
-        0.253913,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806
-      ],
-      "last_updated": "2026-04-23T16:48:50.004421+00:00"
+      "last_updated": "2026-04-23T17:08:49.726639+00:00"
     },
     {
       "symbol": "FRAX",
       "name": "Frax",
       "type": "usd_crypto",
-      "mcap": 274265129,
-      "vol_24h": 871375,
-      "price": 0.993474,
+      "mcap": 274152347,
+      "vol_24h": 859381,
+      "price": 0.993381,
       "rank": 148,
       "peg": 57.5,
       "reserve": 65.0,
@@ -437,10 +357,10 @@
         "peg_dev_max": 4.2763,
         "peg_depeg_days": 294,
         "peg_volatility": 0.0689,
-        "liq_spread_pct": 0.0881,
+        "liq_spread_pct": 0.0885,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0032
+        "liq_vmr": 0.0031
       },
       "backing": "crypto",
       "regulatory": "none",
@@ -479,16 +399,95 @@
         0.993512,
         0.993431,
         0.993632,
-        0.993366
+        0.993245
       ],
-      "last_updated": "2026-04-23T16:48:50.004220+00:00"
+      "last_updated": "2026-04-23T17:08:49.726805+00:00"
+    },
+    {
+      "symbol": "RLUSD",
+      "name": "Ripple USD",
+      "type": "usd_fiat",
+      "mcap": 1501952446,
+      "vol_24h": 217046582,
+      "price": 0.999964,
+      "rank": 54,
+      "peg": 100.0,
+      "reserve": 29.5,
+      "liquidity": 50.5,
+      "management": 44.0,
+      "smart_contract": 70.0,
+      "decentralization": 77.0,
+      "systemic_penalty": 0,
+      "total": 62.4,
+      "letter": "C+",
+      "weights_used": {
+        "peg": 0.3,
+        "res": 0.25,
+        "liq": 0.15,
+        "mgmt": 0.15,
+        "sc": 0.1,
+        "dec": 0.05
+      },
+      "flags": [
+        "WARN_No_TVL_data"
+      ],
+      "sub_scores": {
+        "peg_dev_avg": 0.0151,
+        "peg_dev_max": 0.3079,
+        "peg_depeg_days": 0,
+        "peg_volatility": 0.0138,
+        "liq_spread_pct": null,
+        "liq_exchanges": 5,
+        "liq_tvl": null,
+        "liq_vmr": 0.1445
+      },
+      "backing": "fiat",
+      "regulatory": "ripple",
+      "attestation": "none",
+      "enforcement": "none",
+      "age_yrs": 1,
+      "chains": 2,
+      "has_pause": false,
+      "sparkline": [
+        1.00009,
+        1.000094,
+        0.999934,
+        0.999833,
+        1.000464,
+        1.000721,
+        1.0001,
+        1.000176,
+        1.00013,
+        0.999954,
+        1.000001,
+        1.000005,
+        0.999906,
+        0.999845,
+        0.999859,
+        0.999978,
+        0.999833,
+        0.999913,
+        0.999892,
+        0.999987,
+        0.999883,
+        0.999857,
+        0.999837,
+        0.99984,
+        0.999887,
+        0.999932,
+        0.999888,
+        0.999919,
+        0.999958,
+        0.999929
+      ],
+      "last_updated": "2026-04-23T17:08:49.726589+00:00"
     },
     {
       "symbol": "USDT",
       "name": "Tether",
       "type": "usd_fiat",
-      "mcap": 188858808226,
-      "vol_24h": 68993289376,
+      "mcap": 188867620381,
+      "vol_24h": 69013969703,
       "price": 1.0,
       "rank": 3,
       "peg": 100.0,
@@ -519,7 +518,7 @@
         "liq_spread_pct": 0.001,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.3653
+        "liq_vmr": 0.3654
       },
       "backing": "fiat",
       "regulatory": "none",
@@ -558,96 +557,17 @@
         1.000148,
         1.000152,
         1.000229,
-        1.000292
+        1.000298
       ],
-      "last_updated": "2026-04-23T16:48:50.003683+00:00"
-    },
-    {
-      "symbol": "FDUSD",
-      "name": "First Digital USD",
-      "type": "usd_fiat",
-      "mcap": 414994892,
-      "vol_24h": 105242439,
-      "price": 0.999075,
-      "rank": 114,
-      "peg": 93.2,
-      "reserve": 29.5,
-      "liquidity": 65.2,
-      "management": 46.5,
-      "smart_contract": 52.0,
-      "decentralization": 40.0,
-      "systemic_penalty": 0,
-      "total": 59.3,
-      "letter": "C",
-      "weights_used": {
-        "peg": 0.3,
-        "res": 0.25,
-        "liq": 0.15,
-        "mgmt": 0.15,
-        "sc": 0.1,
-        "dec": 0.05
-      },
-      "flags": [
-        "WARN_No_TVL_data"
-      ],
-      "sub_scores": {
-        "peg_dev_avg": 0.1049,
-        "peg_dev_max": 0.8929,
-        "peg_depeg_days": 0,
-        "peg_volatility": 0.029,
-        "liq_spread_pct": 0.01,
-        "liq_exchanges": 5,
-        "liq_tvl": null,
-        "liq_vmr": 0.2536
-      },
-      "backing": "fiat",
-      "regulatory": "none",
-      "attestation": "none",
-      "enforcement": "none",
-      "age_yrs": 1,
-      "chains": 1,
-      "has_pause": true,
-      "sparkline": [
-        0.999546,
-        0.999135,
-        0.998831,
-        0.999218,
-        0.999395,
-        0.998608,
-        0.998851,
-        0.999202,
-        0.99882,
-        0.998862,
-        0.999652,
-        0.999189,
-        0.999085,
-        0.999404,
-        0.999198,
-        0.9988,
-        0.998995,
-        0.999101,
-        0.999122,
-        0.998693,
-        0.999419,
-        0.998678,
-        0.998535,
-        0.998907,
-        0.998702,
-        0.998659,
-        0.99842,
-        0.998046,
-        0.999524,
-        0.99927
-      ],
-      "last_updated": "2026-04-23T16:48:50.004106+00:00"
+      "last_updated": "2026-04-23T17:08:49.726302+00:00"
     },
     {
       "symbol": "PYUSD",
       "name": "PayPal USD",
       "type": "usd_fiat",
-      "mcap": 3503154396,
-      "vol_24h": 110089357,
-      "price": 0.999801,
+      "mcap": 3502290908,
+      "vol_24h": 107804983,
+      "price": 0.999742,
       "rank": 32,
       "peg": 89.5,
       "reserve": 41.0,
@@ -677,7 +597,7 @@
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0314
+        "liq_vmr": 0.0308
       },
       "backing": "fiat",
       "regulatory": "none",
@@ -716,18 +636,97 @@
         0.999756,
         0.999841,
         0.999927,
-        0.999888
+        0.999931
       ],
-      "last_updated": "2026-04-23T16:48:50.003928+00:00"
+      "last_updated": "2026-04-23T17:08:49.726548+00:00"
+    },
+    {
+      "symbol": "FDUSD",
+      "name": "First Digital USD",
+      "type": "usd_fiat",
+      "mcap": 415745309,
+      "vol_24h": 7068095,
+      "price": 0.99961,
+      "rank": 114,
+      "peg": 93.2,
+      "reserve": 29.5,
+      "liquidity": 41.2,
+      "management": 46.5,
+      "smart_contract": 52.0,
+      "decentralization": 40.0,
+      "systemic_penalty": 0,
+      "total": 55.7,
+      "letter": "C",
+      "weights_used": {
+        "peg": 0.3,
+        "res": 0.25,
+        "liq": 0.15,
+        "mgmt": 0.15,
+        "sc": 0.1,
+        "dec": 0.05
+      },
+      "flags": [
+        "WARN_No_TVL_data"
+      ],
+      "sub_scores": {
+        "peg_dev_avg": 0.1049,
+        "peg_dev_max": 0.8929,
+        "peg_depeg_days": 0,
+        "peg_volatility": 0.029,
+        "liq_spread_pct": 0.01,
+        "liq_exchanges": 5,
+        "liq_tvl": null,
+        "liq_vmr": 0.017
+      },
+      "backing": "fiat",
+      "regulatory": "none",
+      "attestation": "none",
+      "enforcement": "none",
+      "age_yrs": 1,
+      "chains": 1,
+      "has_pause": true,
+      "sparkline": [
+        0.999546,
+        0.999135,
+        0.998831,
+        0.999218,
+        0.999395,
+        0.998608,
+        0.998851,
+        0.999202,
+        0.99882,
+        0.998862,
+        0.999652,
+        0.999189,
+        0.999085,
+        0.999404,
+        0.999198,
+        0.9988,
+        0.998995,
+        0.999101,
+        0.999122,
+        0.998693,
+        0.999419,
+        0.998678,
+        0.998535,
+        0.998907,
+        0.998702,
+        0.998659,
+        0.99842,
+        0.998046,
+        0.999524,
+        0.99902
+      ],
+      "last_updated": "2026-04-23T17:08:49.726754+00:00"
     },
     {
       "symbol": "BUSD",
       "name": "Binance USD",
       "type": "usd_fiat",
-      "mcap": 39963792,
-      "vol_24h": 1162.34,
-      "price": 0.998438,
-      "rank": 548,
+      "mcap": 39869900,
+      "vol_24h": 1159.61,
+      "price": 0.996093,
+      "rank": 549,
       "peg": 47.2,
       "reserve": 80.8,
       "liquidity": 28.0,
@@ -749,10 +748,10 @@
         "WARN_No_TVL_data"
       ],
       "sub_scores": {
-        "peg_dev_avg": 0.2501,
+        "peg_dev_avg": 0.2502,
         "peg_dev_max": 7.5663,
         "peg_depeg_days": 102,
-        "peg_volatility": 0.2135,
+        "peg_volatility": 0.2136,
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
@@ -795,9 +794,9 @@
         0.990941,
         0.997687,
         0.999159,
-        0.998438
+        0.996093
       ],
-      "last_updated": "2026-04-23T16:48:50.004277+00:00"
+      "last_updated": "2026-04-23T17:08:49.726846+00:00"
     }
   ],
   "non_usd_stablecoins": [
@@ -848,7 +847,7 @@
       "chains": 1,
       "has_pause": true,
       "sparkline": [],
-      "last_updated": "2026-04-23T16:48:50.004314+00:00"
+      "last_updated": "2026-04-23T17:08:49.726874+00:00"
     },
     {
       "symbol": "SEUR",
@@ -857,7 +856,7 @@
       "mcap": 19792.7,
       "vol_24h": 12.44,
       "price": 0.01989209,
-      "rank": 8637,
+      "rank": 8635,
       "peg": 98.0,
       "reserve": 29.5,
       "liquidity": 28.0,
@@ -928,15 +927,15 @@
         0.019892,
         0.019892
       ],
-      "last_updated": "2026-04-23T16:48:50.004605+00:00"
+      "last_updated": "2026-04-23T17:08:49.727033+00:00"
     },
     {
       "symbol": "XAUT",
       "name": "Tether Gold",
       "type": "gold",
-      "mcap": 2639276982,
-      "vol_24h": 157451957,
-      "price": 4714.22,
+      "mcap": 2642715241,
+      "vol_24h": 157101896,
+      "price": 4719.1,
       "rank": 36,
       "peg": 32.2,
       "reserve": 59.5,
@@ -959,14 +958,14 @@
         "WARN_No_TVL_data"
       ],
       "sub_scores": {
-        "peg_dev_avg": 488703.5629,
+        "peg_dev_avg": 488703.1415,
         "peg_dev_max": 557988.782,
         "peg_depeg_days": 2167,
-        "peg_volatility": 0.2456,
+        "peg_volatility": 0.2455,
         "liq_spread_pct": 0.0002,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0597
+        "liq_vmr": 0.0594
       },
       "backing": "gold",
       "regulatory": "none",
@@ -1005,17 +1004,17 @@
         4714.202401,
         4719.010314,
         4706.33977,
-        4718.909538
+        4709.778952
       ],
-      "last_updated": "2026-04-23T16:48:50.004499+00:00"
+      "last_updated": "2026-04-23T17:08:49.726958+00:00"
     },
     {
       "symbol": "PAXG",
       "name": "PAX Gold",
       "type": "gold",
-      "mcap": 2293839934,
-      "vol_24h": 128673243,
-      "price": 4716.79,
+      "mcap": 2296954317,
+      "vol_24h": 128934577,
+      "price": 4722.7,
       "rank": 41,
       "peg": 32.2,
       "reserve": 59.5,
@@ -1038,10 +1037,10 @@
         "WARN_No_TVL_data"
       ],
       "sub_scores": {
-        "peg_dev_avg": 491116.1343,
+        "peg_dev_avg": 491115.7678,
         "peg_dev_max": 560445.6462,
         "peg_depeg_days": 2166,
-        "peg_volatility": 0.242,
+        "peg_volatility": 0.2419,
         "liq_spread_pct": 0.0002,
         "liq_exchanges": 5,
         "liq_tvl": null,
@@ -1084,18 +1083,18 @@
         4718.124467,
         4722.689024,
         4710.189204,
-        4722.159135
+        4714.220131
       ],
-      "last_updated": "2026-04-23T16:48:50.004548+00:00"
+      "last_updated": "2026-04-23T17:08:49.726992+00:00"
     },
     {
       "symbol": "RAI",
       "name": "Rai Reflex Index",
       "type": "reflex",
-      "mcap": 1764519,
-      "vol_24h": 3228.49,
+      "mcap": 1761659,
+      "vol_24h": 3224.1,
       "price": 3.15,
-      "rank": 2436,
+      "rank": 2434,
       "peg": 28.2,
       "reserve": 82.8,
       "liquidity": 28.0,
@@ -1117,10 +1116,10 @@
         "WARN_No_TVL_data"
       ],
       "sub_scores": {
-        "peg_dev_avg": 229.7291,
+        "peg_dev_avg": 229.7287,
         "peg_dev_max": 280.2238,
         "peg_depeg_days": 2164,
-        "peg_volatility": 0.6653,
+        "peg_volatility": 0.6654,
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
@@ -1163,9 +1162,9 @@
         3.14218,
         3.153299,
         3.153366,
-        3.153028
+        3.144409
       ],
-      "last_updated": "2026-04-23T16:48:50.004376+00:00"
+      "last_updated": "2026-04-23T17:08:49.726913+00:00"
     }
   ],
   "all_coins": [
@@ -1173,8 +1172,8 @@
       "symbol": "USDT",
       "name": "Tether",
       "type": "usd_fiat",
-      "mcap": 188858808226,
-      "vol_24h": 68993289376,
+      "mcap": 188867620381,
+      "vol_24h": 69013969703,
       "price": 1.0,
       "rank": 3,
       "peg": 100.0,
@@ -1205,7 +1204,7 @@
         "liq_spread_pct": 0.001,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.3653
+        "liq_vmr": 0.3654
       },
       "backing": "fiat",
       "regulatory": "none",
@@ -1244,17 +1243,17 @@
         1.000148,
         1.000152,
         1.000229,
-        1.000292
+        1.000298
       ],
-      "last_updated": "2026-04-23T16:48:50.003683+00:00"
+      "last_updated": "2026-04-23T17:08:49.726302+00:00"
     },
     {
       "symbol": "USDC",
       "name": "USD Coin",
       "type": "usd_fiat",
-      "mcap": 78131640580,
-      "vol_24h": 15389230317,
-      "price": 0.999862,
+      "mcap": 78126523990,
+      "vol_24h": 15359116490,
+      "price": 0.999826,
       "rank": 6,
       "peg": 100.0,
       "reserve": 86.5,
@@ -1284,7 +1283,7 @@
         "liq_spread_pct": 0.001,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.197
+        "liq_vmr": 0.1966
       },
       "backing": "fiat",
       "regulatory": "nydfs",
@@ -1323,17 +1322,17 @@
         0.999764,
         0.999796,
         0.999906,
-        0.999854
+        0.999824
       ],
-      "last_updated": "2026-04-23T16:48:50.003808+00:00"
+      "last_updated": "2026-04-23T17:08:49.726458+00:00"
     },
     {
       "symbol": "DAI",
       "name": "Dai",
       "type": "usd_crypto",
-      "mcap": 4428883721,
-      "vol_24h": 27259704,
-      "price": 0.999685,
+      "mcap": 4417517389,
+      "vol_24h": 28766052,
+      "price": 0.999719,
       "rank": 23,
       "peg": 96.2,
       "reserve": 87.2,
@@ -1363,7 +1362,7 @@
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0062
+        "liq_vmr": 0.0065
       },
       "backing": "crypto",
       "regulatory": "dao",
@@ -1402,17 +1401,17 @@
         0.999617,
         0.999666,
         0.99948,
-        0.999686
+        0.999738
       ],
-      "last_updated": "2026-04-23T16:48:50.003865+00:00"
+      "last_updated": "2026-04-23T17:08:49.726504+00:00"
     },
     {
       "symbol": "PYUSD",
       "name": "PayPal USD",
       "type": "usd_fiat",
-      "mcap": 3503154396,
-      "vol_24h": 110089357,
-      "price": 0.999801,
+      "mcap": 3502290908,
+      "vol_24h": 107804983,
+      "price": 0.999742,
       "rank": 32,
       "peg": 89.5,
       "reserve": 41.0,
@@ -1442,7 +1441,7 @@
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0314
+        "liq_vmr": 0.0308
       },
       "backing": "fiat",
       "regulatory": "none",
@@ -1481,16 +1480,95 @@
         0.999756,
         0.999841,
         0.999927,
-        0.999888
+        0.999931
       ],
-      "last_updated": "2026-04-23T16:48:50.003928+00:00"
+      "last_updated": "2026-04-23T17:08:49.726548+00:00"
+    },
+    {
+      "symbol": "RLUSD",
+      "name": "Ripple USD",
+      "type": "usd_fiat",
+      "mcap": 1501952446,
+      "vol_24h": 217046582,
+      "price": 0.999964,
+      "rank": 54,
+      "peg": 100.0,
+      "reserve": 29.5,
+      "liquidity": 50.5,
+      "management": 44.0,
+      "smart_contract": 70.0,
+      "decentralization": 77.0,
+      "systemic_penalty": 0,
+      "total": 62.4,
+      "letter": "C+",
+      "weights_used": {
+        "peg": 0.3,
+        "res": 0.25,
+        "liq": 0.15,
+        "mgmt": 0.15,
+        "sc": 0.1,
+        "dec": 0.05
+      },
+      "flags": [
+        "WARN_No_TVL_data"
+      ],
+      "sub_scores": {
+        "peg_dev_avg": 0.0151,
+        "peg_dev_max": 0.3079,
+        "peg_depeg_days": 0,
+        "peg_volatility": 0.0138,
+        "liq_spread_pct": null,
+        "liq_exchanges": 5,
+        "liq_tvl": null,
+        "liq_vmr": 0.1445
+      },
+      "backing": "fiat",
+      "regulatory": "ripple",
+      "attestation": "none",
+      "enforcement": "none",
+      "age_yrs": 1,
+      "chains": 2,
+      "has_pause": false,
+      "sparkline": [
+        1.00009,
+        1.000094,
+        0.999934,
+        0.999833,
+        1.000464,
+        1.000721,
+        1.0001,
+        1.000176,
+        1.00013,
+        0.999954,
+        1.000001,
+        1.000005,
+        0.999906,
+        0.999845,
+        0.999859,
+        0.999978,
+        0.999833,
+        0.999913,
+        0.999892,
+        0.999987,
+        0.999883,
+        0.999857,
+        0.999837,
+        0.99984,
+        0.999887,
+        0.999932,
+        0.999888,
+        0.999919,
+        0.999958,
+        0.999929
+      ],
+      "last_updated": "2026-04-23T17:08:49.726589+00:00"
     },
     {
       "symbol": "USDD",
       "name": "USDD",
       "type": "usd_crypto",
-      "mcap": 1385359156,
-      "vol_24h": 94118618,
+      "mcap": 1385352762,
+      "vol_24h": 92903227,
       "price": 1.0,
       "rank": 56,
       "peg": 100.0,
@@ -1521,7 +1599,7 @@
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0679
+        "liq_vmr": 0.0671
       },
       "backing": "crypto",
       "regulatory": "none",
@@ -1560,17 +1638,17 @@
         1.000099,
         1.000115,
         1.000197,
-        1.000269
+        1.000293
       ],
-      "last_updated": "2026-04-23T16:48:50.003980+00:00"
+      "last_updated": "2026-04-23T17:08:49.726639+00:00"
     },
     {
       "symbol": "TUSD",
       "name": "TrueUSD",
       "type": "usd_fiat",
-      "mcap": 493883831,
-      "vol_24h": 10790694,
-      "price": 0.998681,
+      "mcap": 493738952,
+      "vol_24h": 10945655,
+      "price": 0.99851,
       "rank": 102,
       "peg": 97.0,
       "reserve": 52.5,
@@ -1597,10 +1675,10 @@
         "peg_dev_max": 0.4617,
         "peg_depeg_days": 0,
         "peg_volatility": 0.0303,
-        "liq_spread_pct": 0.02,
+        "liq_spread_pct": 0.01,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0218
+        "liq_vmr": 0.0222
       },
       "backing": "fiat",
       "regulatory": "none",
@@ -1639,26 +1717,26 @@
         0.998694,
         0.998479,
         0.998063,
-        0.998588
+        0.998386
       ],
-      "last_updated": "2026-04-23T16:48:50.004045+00:00"
+      "last_updated": "2026-04-23T17:08:49.726687+00:00"
     },
     {
       "symbol": "FDUSD",
       "name": "First Digital USD",
       "type": "usd_fiat",
-      "mcap": 414994892,
-      "vol_24h": 105242439,
-      "price": 0.999075,
+      "mcap": 415745309,
+      "vol_24h": 7068095,
+      "price": 0.99961,
       "rank": 114,
       "peg": 93.2,
       "reserve": 29.5,
-      "liquidity": 65.2,
+      "liquidity": 41.2,
       "management": 46.5,
       "smart_contract": 52.0,
       "decentralization": 40.0,
       "systemic_penalty": 0,
-      "total": 59.3,
+      "total": 55.7,
       "letter": "C",
       "weights_used": {
         "peg": 0.3,
@@ -1679,7 +1757,7 @@
         "liq_spread_pct": 0.01,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.2536
+        "liq_vmr": 0.017
       },
       "backing": "fiat",
       "regulatory": "none",
@@ -1718,17 +1796,17 @@
         0.99842,
         0.998046,
         0.999524,
-        0.99927
+        0.99902
       ],
-      "last_updated": "2026-04-23T16:48:50.004106+00:00"
+      "last_updated": "2026-04-23T17:08:49.726754+00:00"
     },
     {
       "symbol": "FRAX",
       "name": "Frax",
       "type": "usd_crypto",
-      "mcap": 274265129,
-      "vol_24h": 871375,
-      "price": 0.993474,
+      "mcap": 274152347,
+      "vol_24h": 859381,
+      "price": 0.993381,
       "rank": 148,
       "peg": 57.5,
       "reserve": 65.0,
@@ -1755,10 +1833,10 @@
         "peg_dev_max": 4.2763,
         "peg_depeg_days": 294,
         "peg_volatility": 0.0689,
-        "liq_spread_pct": 0.0881,
+        "liq_spread_pct": 0.0885,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0032
+        "liq_vmr": 0.0031
       },
       "backing": "crypto",
       "regulatory": "none",
@@ -1797,18 +1875,18 @@
         0.993512,
         0.993431,
         0.993632,
-        0.993366
+        0.993245
       ],
-      "last_updated": "2026-04-23T16:48:50.004220+00:00"
+      "last_updated": "2026-04-23T17:08:49.726805+00:00"
     },
     {
       "symbol": "BUSD",
       "name": "Binance USD",
       "type": "usd_fiat",
-      "mcap": 39963792,
-      "vol_24h": 1162.34,
-      "price": 0.998438,
-      "rank": 548,
+      "mcap": 39869900,
+      "vol_24h": 1159.61,
+      "price": 0.996093,
+      "rank": 549,
       "peg": 47.2,
       "reserve": 80.8,
       "liquidity": 28.0,
@@ -1830,10 +1908,10 @@
         "WARN_No_TVL_data"
       ],
       "sub_scores": {
-        "peg_dev_avg": 0.2501,
+        "peg_dev_avg": 0.2502,
         "peg_dev_max": 7.5663,
         "peg_depeg_days": 102,
-        "peg_volatility": 0.2135,
+        "peg_volatility": 0.2136,
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
@@ -1876,9 +1954,9 @@
         0.990941,
         0.997687,
         0.999159,
-        0.998438
+        0.996093
       ],
-      "last_updated": "2026-04-23T16:48:50.004277+00:00"
+      "last_updated": "2026-04-23T17:08:49.726846+00:00"
     },
     {
       "symbol": "XSGD",
@@ -1927,16 +2005,16 @@
       "chains": 1,
       "has_pause": true,
       "sparkline": [],
-      "last_updated": "2026-04-23T16:48:50.004314+00:00"
+      "last_updated": "2026-04-23T17:08:49.726874+00:00"
     },
     {
       "symbol": "RAI",
       "name": "Rai Reflex Index",
       "type": "reflex",
-      "mcap": 1764519,
-      "vol_24h": 3228.49,
+      "mcap": 1761659,
+      "vol_24h": 3224.1,
       "price": 3.15,
-      "rank": 2436,
+      "rank": 2434,
       "peg": 28.2,
       "reserve": 82.8,
       "liquidity": 28.0,
@@ -1958,10 +2036,10 @@
         "WARN_No_TVL_data"
       ],
       "sub_scores": {
-        "peg_dev_avg": 229.7291,
+        "peg_dev_avg": 229.7287,
         "peg_dev_max": 280.2238,
         "peg_depeg_days": 2164,
-        "peg_volatility": 0.6653,
+        "peg_volatility": 0.6654,
         "liq_spread_pct": null,
         "liq_exchanges": 5,
         "liq_tvl": null,
@@ -2004,97 +2082,17 @@
         3.14218,
         3.153299,
         3.153366,
-        3.153028
+        3.144409
       ],
-      "last_updated": "2026-04-23T16:48:50.004376+00:00"
-    },
-    {
-      "symbol": "BEAN",
-      "name": "Bean",
-      "type": "usd_crypto",
-      "mcap": 0.0,
-      "vol_24h": 5622.79,
-      "price": 0.252806,
-      "rank": null,
-      "peg": 74.7,
-      "reserve": 57.0,
-      "liquidity": 40.0,
-      "management": 57.5,
-      "smart_contract": 80.0,
-      "decentralization": 67.0,
-      "systemic_penalty": 0,
-      "total": 65.6,
-      "letter": "C+",
-      "weights_used": {
-        "peg": 0.3,
-        "res": 0.2,
-        "liq": 0.1,
-        "mgmt": 0.1,
-        "sc": 0.15,
-        "dec": 0.15
-      },
-      "flags": [
-        "SEVERE_DEPEG",
-        "WARN_No_market_data"
-      ],
-      "sub_scores": {
-        "peg_dev_avg": 76.744,
-        "peg_dev_max": 78.9683,
-        "peg_depeg_days": 1993,
-        "peg_volatility": 0.4026,
-        "liq_spread_pct": null,
-        "liq_exchanges": 5,
-        "liq_tvl": null,
-        "liq_vmr": null
-      },
-      "backing": "crypto",
-      "regulatory": "none",
-      "attestation": "partial",
-      "enforcement": "none",
-      "age_yrs": 3,
-      "chains": 1,
-      "has_pause": false,
-      "sparkline": [
-        0.236803,
-        0.236551,
-        0.236676,
-        0.235979,
-        0.235969,
-        0.236257,
-        0.237551,
-        0.236372,
-        0.236053,
-        0.235699,
-        0.235948,
-        0.236842,
-        0.236607,
-        0.236347,
-        0.238777,
-        0.253021,
-        0.253022,
-        0.252882,
-        0.254019,
-        0.253913,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806,
-        0.252806
-      ],
-      "last_updated": "2026-04-23T16:48:50.004421+00:00"
+      "last_updated": "2026-04-23T17:08:49.726913+00:00"
     },
     {
       "symbol": "XAUT",
       "name": "Tether Gold",
       "type": "gold",
-      "mcap": 2639276982,
-      "vol_24h": 157451957,
-      "price": 4714.22,
+      "mcap": 2642715241,
+      "vol_24h": 157101896,
+      "price": 4719.1,
       "rank": 36,
       "peg": 32.2,
       "reserve": 59.5,
@@ -2117,14 +2115,14 @@
         "WARN_No_TVL_data"
       ],
       "sub_scores": {
-        "peg_dev_avg": 488703.5629,
+        "peg_dev_avg": 488703.1415,
         "peg_dev_max": 557988.782,
         "peg_depeg_days": 2167,
-        "peg_volatility": 0.2456,
+        "peg_volatility": 0.2455,
         "liq_spread_pct": 0.0002,
         "liq_exchanges": 5,
         "liq_tvl": null,
-        "liq_vmr": 0.0597
+        "liq_vmr": 0.0594
       },
       "backing": "gold",
       "regulatory": "none",
@@ -2163,17 +2161,17 @@
         4714.202401,
         4719.010314,
         4706.33977,
-        4718.909538
+        4709.778952
       ],
-      "last_updated": "2026-04-23T16:48:50.004499+00:00"
+      "last_updated": "2026-04-23T17:08:49.726958+00:00"
     },
     {
       "symbol": "PAXG",
       "name": "PAX Gold",
       "type": "gold",
-      "mcap": 2293839934,
-      "vol_24h": 128673243,
-      "price": 4716.79,
+      "mcap": 2296954317,
+      "vol_24h": 128934577,
+      "price": 4722.7,
       "rank": 41,
       "peg": 32.2,
       "reserve": 59.5,
@@ -2196,10 +2194,10 @@
         "WARN_No_TVL_data"
       ],
       "sub_scores": {
-        "peg_dev_avg": 491116.1343,
+        "peg_dev_avg": 491115.7678,
         "peg_dev_max": 560445.6462,
         "peg_depeg_days": 2166,
-        "peg_volatility": 0.242,
+        "peg_volatility": 0.2419,
         "liq_spread_pct": 0.0002,
         "liq_exchanges": 5,
         "liq_tvl": null,
@@ -2242,9 +2240,9 @@
         4718.124467,
         4722.689024,
         4710.189204,
-        4722.159135
+        4714.220131
       ],
-      "last_updated": "2026-04-23T16:48:50.004548+00:00"
+      "last_updated": "2026-04-23T17:08:49.726992+00:00"
     },
     {
       "symbol": "SEUR",
@@ -2253,7 +2251,7 @@
       "mcap": 19792.7,
       "vol_24h": 12.44,
       "price": 0.01989209,
-      "rank": 8637,
+      "rank": 8635,
       "peg": 98.0,
       "reserve": 29.5,
       "liquidity": 28.0,
@@ -2324,7 +2322,7 @@
         0.019892,
         0.019892
       ],
-      "last_updated": "2026-04-23T16:48:50.004605+00:00"
+      "last_updated": "2026-04-23T17:08:49.727033+00:00"
     }
   ]
 }

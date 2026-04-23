@@ -57,6 +57,7 @@ COIN_META = {
     "USDC":  {"name":"USD Coin",          "type":"usd_fiat",  "backing":"fiat",  "reg":"nydfs",       "attest":"monthly_good",         "enforcement":"none",         "chains":3,  "pause":True,  "age":9,  "contracts":{"ethereum":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"}},
     "DAI":   {"name":"Dai",               "type":"usd_crypto","backing":"crypto","reg":"dao",         "attest":"onchain_transparent", "enforcement":"none",         "chains":2,  "pause":False, "age":8,  "contracts":{"ethereum":"0x6b175474e89094c44da98b9540edeacd471ac3c3"}},
     "PYUSD": {"name":"PayPal USD",        "type":"usd_fiat",  "backing":"fiat",  "reg":"none",        "attest":"monthly_limited",      "enforcement":"none",         "chains":1,  "pause":True,  "age":2,  "contracts":{"ethereum":"0x6c3ea9036407f330a2bf2bc2e2c2b87b20bd4c0"}},
+    "RLUSD": {"name":"Ripple USD",     "type":"usd_fiat","backing":"fiat","reg":"ripple","attest":"none","enforcement":"none","chains":2,"pause":False,"age":1,"contracts":{"xrpl":"","ethereum":"0xF7F489198Ad4968D7b476F79C38b7AE1b5e5a6e8"}},
     "USDD":  {"name":"USDD",              "type":"usd_crypto","backing":"crypto","reg":"none",        "attest":"none",                  "enforcement":"none",         "chains":3,  "pause":True,  "age":4,  "contracts":{"tron":"TR5RKHLLpsx9EGbLwbnanrVPy4NBZtUGS","ethereum":"0x0e3cc2f55a26e3e3d2e3e3e3e3e3e3e3e3e3e3e"}},
     "TUSD":  {"name":"TrueUSD",           "type":"usd_fiat",  "backing":"fiat",  "reg":"none",        "attest":"monthly_opaque",       "enforcement":"none",         "chains":2,  "pause":True,  "age":6,  "contracts":{"ethereum":"0x0000000000085d4790f3a4c6a2b0d5c2f3b4c6a"}},
     "FDUSD": {"name":"First Digital USD","type":"usd_fiat",   "backing":"fiat",  "reg":"none",        "attest":"none",                  "enforcement":"none",         "chains":1,  "pause":True,  "age":1,  "contracts":{"ethereum":"0x2F6F9c3c3D3e3e3e3e3e3e3e3e3e3e3e3e3e3e3"}},
@@ -65,7 +66,6 @@ COIN_META = {
     # Non-USD (excluded from primary table)
     "XSGD":  {"name":"XSGD",              "type":"sgd_fiat",  "backing":"fiat",  "reg":"mas",         "attest":"monthly_good",          "enforcement":"none",         "chains":1,  "pause":True,  "age":4,  "contracts":{"ethereum":"0x70e8b6e13c6a4d1c2b3c3b3b3b3b3b3b3b3b3b3b3"}},
     "RAI":   {"name":"Rai Reflex Index",  "type":"reflex",    "backing":"crypto","reg":"dao",         "attest":"onchain",               "enforcement":"none",         "chains":1,  "pause":False, "age":4,  "contracts":{"ethereum":"0x03ab458634910aad14ef79b826c3e2e4a6d80e3"}},
-    "BEAN":  {"name":"Bean",              "type":"usd_crypto","backing":"crypto","reg":"none",        "attest":"partial",               "enforcement":"none",         "chains":1,  "pause":False, "age":3,  "contracts":{"ethereum":"0x03be5d98ab06e10b2b3d3c3c3c3c3c3c3c3c3c3c3"}},
     # Gold-backed
     "XAUT":  {"name":"Tether Gold",       "type":"gold",      "backing":"gold",  "reg":"none",        "attest":"quarterly",            "enforcement":"none",         "chains":3,  "pause":True,  "age":7,  "contracts":{"ethereum":"0x687496b65378f3f3a3f3f3f3f3f3f3f3f3f3f3f3f3"}},
     "PAXG":  {"name":"PAX Gold",          "type":"gold",      "backing":"gold",  "reg":"none",        "attest":"quarterly",            "enforcement":"none",         "chains":2,  "pause":True,  "age":6,  "contracts":{"ethereum":"0x45804880de22913dafe09f4984848f6f83a3b4a"}},
@@ -77,8 +77,8 @@ COIN_META = {
 CG_IDS = {
     "USDT":"tether","USDC":"usd-coin","DAI":"dai","PYUSD":"paypal-usd",
     "USDD":"usdd","TUSD":"true-usd","FDUSD":"first-digital-usd","FRAX":"frax",
-    "BUSD":"binance-usd","XSGD":"xsrgd","RAI":"rai","BEAN":"bean",
-    "XAUT":"tether-gold","PAXG":"pax-gold","SEUR":"seur",
+    "BUSD":"binance-usd","XSGD":"xsrgd","RAI":"rai",
+    "XAUT":"tether-gold","RLUSD":"ripple-usd","PAXG":"pax-gold","SEUR":"seur",
 }
 
 # Binance trading pairs for bid-ask spread
