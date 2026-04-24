@@ -114,9 +114,9 @@ Overall Score = Peg Stability &times; 30%<br>
 
             <h3>5. Smart Contract Security (10%)</h3>
             <ul>
-                <li><strong>Audit Status (40%):</strong> Tier-1 audit (OpenZeppelin, Trail of Bits, Consensys) = 100; other = 70; unaudited = 25.</li>
-                <li><strong>Known Exploits (30%):</strong> No exploits = 100; exploit &lt;$10k = 70; &gt;$1M = 5.</li>
-                <li><strong>Upgradeability (30%):</strong> Non-upgradeable or timelock = 100; multisig upgrade = 70; single-key upgrade = 30; has pause function = 40.</li>
+                <li><strong>Source Code Verification (40%):</strong> Etherscan-verified contracts = 90. Falls back to attestation-based proxy scoring if unverified.</li>
+                <li><strong>Proxy Risk (30%):</strong> No proxy = 100; well-governed proxy (e.g. Compound-style timelock) = 65; bare proxy = 35.</li>
+                <li><strong>Pause/Upgrade Control (30%):</strong> No pause function = 100; pausable only = 50; upgradeable + pausable = 30. Pause function detected from Etherscan ABI (absence of pause fn is a positive signal); falls back to static metadata for unverified contracts.</li>
             </ul>
 
             <h3>6. Decentralization &amp; Censorship Resistance (5%)</h3>
@@ -173,10 +173,10 @@ Overall Score = Peg Stability &times; 30%<br>
                     <tr><th>Source</th><th>Data Provided</th><th>Rate Limit (Free)</th><th>Key Needed</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>CoinGecko</strong></td><td>Price, market cap, volume, exchange list, contract addresses</td><td>10–30/min</td><td>No</td></tr>
+                    <tr><td><strong>CoinGecko</strong></td><td>Price, market cap, volume, exchange list, contract addresses</td><td>10–30/min unauthenticated; 30/min with API key</td><td>Recommended (free key improves rate limits)</td></tr>
                     <tr><td><strong>Binance</strong></td><td>Bid-ask spread, 24h ticker, order book</td><td>1200/min (public)</td><td>No</td></tr>
                     <tr><td><strong>DeFiLlama</strong></td><td>DEX TVL by contract address</td><td>30/min</td><td>No</td></tr>
-                    <tr><td><strong>Etherscan</strong></td><td>Contract source code, audit flags, upgrade functions</td><td>5/sec</td><td>Recommended (free key)</td></tr>
+                    <tr><td><strong>Etherscan</strong></td><td>Contract source code verification, proxy detection, pause/upgrade function detection via ABI; TronGrid for Tron contracts</td><td>1 call/5sec unauthenticated; 5/sec with API key</td><td>Recommended (free key)</td></tr>
                     <tr><td><strong>Issuer disclosures</strong></td><td>Reserve attestations, regulatory licenses, audit reports</td><td>N/A</td><td>No</td></tr>
                 </tbody>
             </table>
@@ -215,6 +215,7 @@ Overall Score = Peg Stability &times; 30%<br>
                 <tbody>
                     <tr><td>v1.0</td><td>Apr 2026</td><td>Initial framework — 6 pillars, free API sources, letter grades</td><td>First build</td></tr>
                     <tr><td>v1.1</td><td>Apr 2026</td><td>Added enforcement history (4.4), systemic risk multiplier (4.5), bankruptcy-remote cap rule (2.4), crypto collateral bonus (2.1), severe depeg rule (1.1), coin type classifier</td><td>Live validation against Bluechip revealed gaps: USDT too generous, USDC reserve too high, BEAN depeg undetected</td></tr>
+                    <tr><td>v1.2</td><td>Apr 2026</td><td>Added CoinGecko API key auth (x-cg-api-key header), Etherscan contract verification (source code, proxy detection, pause fn from ABI), TronGrid support for Tron contracts. Rewrote Pillar 5 scoring with on-chain verification as primary source.</td><td>Coins with verified contracts now score higher on smart-contract pillar; pause-fn absence is a positive signal.</td></tr>
                 </tbody>
             </table>
 

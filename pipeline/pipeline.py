@@ -12,11 +12,13 @@ API sources (all free):
     - CoinGecko (price, market cap, volume, contract addresses)
     - Binance   (bid-ask spreads, ticker data)
     - DeFiLlama (TVL — no key needed)
+    - Etherscan (contract verification, ABI — key recommended)
 
 Rate-limit strategy:
-    - CoinGecko: stagger requests 7s apart; retry 3x on 429
+    - CoinGecko: stagger requests 2s apart (authenticated); retry 3x on 429
     - Binance:   1 call/sec max for public endpoints
     - DeFiLlama: no key needed, 30 req/min
+    - Etherscan: 5 calls/sec with API key; 1 call/5sec without
 """
 
 import json, time, math, logging, textwrap, os
@@ -25,6 +27,9 @@ from pathlib import Path
 from typing import Optional
 
 import requests
+
+COINGECKO_API_KEY = os.environ.get("COINGECKO_API_KEY", "")
+ETHERSCAN_API_KEY = os.environ.get("ETHERSCAN_API_KEY", "")
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 REPO_ROOT = Path(__file__).parent.parent
@@ -48,6 +53,9 @@ SESSION.headers.update({
     "Accept": "application/json",
     "User-Agent": "StablecoinRatings/1.0 (educational; contact@stablecoinratings.org)",
 })
+
+COINGECKO_PRO = COINGECKO_API_KEY and COINGECKO_API_KEY.startswith("CG_PRO_")
+COINGECKO_BASE_URL = "https://pro-api.coingecko.com/api/v3" if COINGECKO_PRO else "https://api.coingecko.com/api/v3"
 
 # ── Coin metadata (static — known stablecoins) ───────────────────────────────
 # format: symbol -> {name, coin_type, backing, reg, attest, enforcement, chains, pause, age_yrs, contracts}
@@ -90,7 +98,10 @@ BINANCE_PAIRS = {
 
 def cg_get(path: str, params: dict = None, retries: int = 3) -> Optional[dict]:
     """CoinGecko API with retry + backoff."""
-    url = f"https://api.coingecko.com/api/v3{path}"
+    url = f"{COINGECKO_BASE_URL}{path}"
+    if COINGECKO_API_KEY:
+        key_name = "x_cg_pro_api_key" if COINGECKO_PRO else "x_cg_demo_api_key"
+        params = {**(params or {}), key_name: COINGECKO_API_KEY}
     for attempt in range(retries):
         try:
             r = SESSION.get(url, params=params, timeout=15)
@@ -130,6 +141,110 @@ def defillama_get(path: str) -> Optional[dict]:
     except Exception as e:
         log.warning(f"DeFiLlama error {path}: {e}")
     return None
+
+
+# ── Etherscan / TronGrid helpers ─────────────────────────────────────────────
+
+TRONGRID_URL = "https://api.trongrid.io/v1/contracts"
+
+CHAINID_MAP = {
+    "ethereum": "1",
+    "bsc":     "56",
+    "base":    "8453",
+    "arbitrum":"42161",
+    "optimism":"10",
+}
+
+
+def tron_get_contract_info(address: str) -> dict:
+    """Fetch contract info from TronGrid (pause/freeze status)."""
+    result = {"has_pause_fn": False, "verified": True, "chain": "tron"}
+    url = f"{TRONGRID_URL}/{address}"
+    try:
+        r = SESSION.get(url, params={"visible": True, "fields": "contract_state"}, timeout=15)
+        if r.status_code == 200:
+            data = r.json()
+            if data.get("success") and data.get("data"):
+                state = data["data"][0].get("contract_state", {})
+                result["has_pause_fn"] = bool(
+                    state.get("pause", False) or state.get("frozen", False) or state.get("suspended", False)
+                )
+    except Exception as e:
+        log.warning(f"TronGrid error for {address}: {e}")
+        result["verified"] = False
+    return result
+
+
+def etherscan_get(params: dict, chainid: str = "1") -> Optional[dict]:
+    """Etherscan API V2 — unified multichain, key required."""
+    if not ETHERSCAN_API_KEY:
+        return None
+    url = "https://api.etherscan.io/api"
+    all_params = {**params, "apikey": ETHERSCAN_API_KEY, "chainid": chainid}
+    try:
+        r = SESSION.get(url, params=all_params, timeout=15)
+        if r.status_code == 200:
+            data = r.json()
+            if data.get("status") == "1":
+                return data
+        else:
+            log.warning(f"Etherscan {r.status_code}: {r.text[:100]}")
+    except Exception as e:
+        log.warning(f"Etherscan exception: {e}")
+    return None
+
+
+def _detect_pause_from_abi(abi_text: str) -> Optional[bool]:
+    """Parse ABI JSON, return True/False if pause fn found/not found, None if ABI unavailable."""
+    if not abi_text:
+        return None
+    try:
+        abi = json.loads(abi_text)
+    except (json.JSONDecodeError, TypeError):
+        return None
+    pause_names = {
+        "pause", "pausetoken", "pausetoken", "freeze", "freezeaccount",
+        "suspend", "pauseadmin", "pause_contract",
+    }
+    for fn in abi:
+        if fn.get("type") == "function" and fn.get("name", "").lower() in pause_names:
+            return True
+    return False  # ABI available, no pause fn found
+
+
+def fetch_contract_info(address: str, chain: str) -> dict:
+    """
+    Fetch verification status + proxy + pause fn from Etherscan V2 (or TronGrid).
+    Returns dict: {verified, is_proxy, implementation, contract_name, has_pause_fn, chain}
+    """
+    result = {
+        "verified": False, "is_proxy": False, "implementation": None,
+        "contract_name": None, "has_pause_fn": False, "chain": chain,
+    }
+
+    if chain == "tron":
+        return tron_get_contract_info(address)
+
+    chainid = CHAINID_MAP.get(chain, "1")
+
+    # Source code verification + proxy detection
+    src = etherscan_get({"module": "contract", "action": "getsourcecode", "address": address}, chainid)
+    if src and src.get("results"):
+        r = src["results"][0]
+        result["verified"] = bool(r.get("SourceCode", "").strip())
+        result["is_proxy"] = r.get("Proxy", "") == "1"
+        result["implementation"] = r.get("Implementation") or None
+        result["contract_name"] = r.get("ContractName") or None
+
+    # ABI for pause function detection
+    abi_data = etherscan_get({"module": "contract", "action": "getabi", "address": address}, chainid)
+    if abi_data and abi_data.get("results"):
+        abi_text = abi_data["results"][0].get("ABI", "")
+        pause_signal = _detect_pause_from_abi(abi_text)
+        if pause_signal is not None:
+            result["has_pause_fn"] = pause_signal
+
+    return result
 
 
 # ── Data fetching ────────────────────────────────────────────────────────────
@@ -174,7 +289,7 @@ def fetch_price_history(symbol: str, days: int = 90) -> Optional[dict]:
     if not cid:
         return None
     log.info(f"  Price history: {symbol} ({days}d)")
-    time.sleep(7)  # stagger per CoinGecko free tier
+    time.sleep(2)  # stagger per CoinGecko (authenticated = 30/min, unauthenticated = 10-30/min)
     data = cg_get(f"/coins/{cid}/market_chart", {"vs_currency":"usd","days":str(days)})
     if not data or "prices" not in data:
         return None
@@ -483,30 +598,47 @@ def score_management(meta: dict, enforcement_history: list = None) -> float:
     return round(r1 * 0.25 + r2 * 0.20 + r3 * 0.20 + r4 * 0.20 + r6 * 0.15, 1)
 
 
-def score_contract(meta: dict) -> float:
+def score_contract(meta: dict, eth_data: dict = None) -> float:
     """Score Pillar 5: Smart Contract Security."""
     attest = meta.get("attest", "none")
-    pause  = meta.get("pause", True)
+    verified = eth_data.get("verified", False) if eth_data else False
+    is_proxy = eth_data.get("is_proxy", False) if eth_data else False
+    has_pause_fn = eth_data.get("has_pause_fn", meta.get("pause", True)) if eth_data else meta.get("pause", True)
 
-    # 5.1 Audit status
-    s1 = {"monthly_good":90,"monthly":75,"onchain_transparent":90,"onchain":75,
-          "onchain_partial":65,"quarterly":65,"monthly_opaque":50,"partial":50,
-          "none":25,"":25}.get(attest, 40)
+    # s1: Source code verification (40%)
+    # Etherscan-verified contracts score highest; fall back to attestation metadata
+    if verified:
+        s1 = 90
+    else:
+        s1 = {"monthly_good":80,"monthly":70,"onchain_transparent":80,"onchain":65,
+              "onchain_partial":55,"quarterly":60,"monthly_opaque":45,"partial":45,
+              "quarterly_opaque":30,"none":20,"":20}.get(attest, 25)
 
-    # 5.2 Known exploits (none documented for these coins in production)
-    s2 = 100
+    # s2: Proxy risk (30%) — proxy contracts introduce upgrade/key-management risk
+    if not is_proxy:
+        s2 = 100
+    elif attest in ("onchain_transparent", "monthly_good"):
+        s2 = 65  # Well-governed proxy (e.g. Compound-style timelock)
+    else:
+        s2 = 35  # Proxy with limited oversight
 
-    # 5.3 Upgradeability/pause
-    s3 = 100 if not pause else 40
+    # s3: Pause/upgrade control (30%)
+    if not has_pause_fn:
+        s3 = 100
+    elif is_proxy:
+        s3 = 30  # Upgradeable + pausable = high centralization risk
+    else:
+        s3 = 50  # Pausable but not upgradeable
 
     return round(s1 * 0.40 + s2 * 0.30 + s3 * 0.30, 1)
 
 
-def score_decentralization(meta: dict) -> float:
+def score_decentralization(meta: dict, eth_data: dict = None) -> float:
     """Score Pillar 6: Decentralization & Censorship Resistance."""
     chains  = meta.get("chains", 1)
-    backing  = meta.get("backing", "fiat")
-    pause    = meta.get("pause", True)
+    backing = meta.get("backing", "fiat")
+    has_pause_fn = eth_data.get("has_pause_fn", meta.get("pause", True)) if eth_data else meta.get("pause", True)
+    is_proxy = eth_data.get("is_proxy", False) if eth_data else False
 
     # 6.1 Chain diversity
     s1 = (100 if chains >= 4 else
@@ -516,8 +648,13 @@ def score_decentralization(meta: dict) -> float:
     # 6.2 On-chain minting
     s2 = 50 if backing == "fiat" else 70
 
-    # 6.3 Freeze/pause
-    s3 = 100 if not pause else 30
+    # 6.3 Freeze/pause + proxy
+    if is_proxy:
+        s3 = 20  # Proxy = external admin can freeze
+    elif not has_pause_fn:
+        s3 = 100
+    else:
+        s3 = 30
 
     return round(s1 * 0.40 + s2 * 0.30 + s3 * 0.30, 1)
 
@@ -533,7 +670,8 @@ def compute_systemic_penalty(mcap: float, mgmt_score: float) -> int:
 
 def score_coin(symbol: str, meta: dict, mkt: Optional[dict],
                ph: Optional[dict], spread_pct: Optional[float],
-               exchange_n: int, tvl: Optional[float]) -> dict:
+               exchange_n: int, tvl: Optional[float],
+               eth_data: dict = None) -> dict:
     """Compute full score for a single coin."""
 
     coin_type = meta.get("type", "usd_fiat")
@@ -543,8 +681,8 @@ def score_coin(symbol: str, meta: dict, mkt: Optional[dict],
     res                           = score_reserve(meta)
     liq, liq_flags                = score_liquidity(mkt, exchange_n, spread_pct, tvl)
     mgmt                          = score_management(meta)
-    sc                            = score_contract(meta)
-    dec                           = score_decentralization(meta)
+    sc                            = score_contract(meta, eth_data)
+    dec                           = score_decentralization(meta, eth_data)
 
     mcap       = mkt.get("mcap", 0) if mkt else 0
     sys_pen    = compute_systemic_penalty(mcap, mgmt)
@@ -553,6 +691,11 @@ def score_coin(symbol: str, meta: dict, mkt: Optional[dict],
     letter     = numeric_to_letter(total)
 
     all_flags  = peg_flags + liq_flags
+
+    has_pause = (
+        eth_data.get("has_pause_fn", meta.get("pause", True))
+        if eth_data else meta.get("pause", True)
+    )
 
     # Per-pillar sub-score explanation (for transparency)
     sub_scores = {
@@ -564,6 +707,9 @@ def score_coin(symbol: str, meta: dict, mkt: Optional[dict],
         "liq_exchanges":   exchange_n,
         "liq_tvl":         tvl,
         "liq_vmr":         round(mkt["vol_24h"]/mkt["mcap"], 4) if mkt and mkt.get("mcap",0) > 0 else None,
+        "sc_verified":     eth_data.get("verified") if eth_data else None,
+        "sc_is_proxy":     eth_data.get("is_proxy") if eth_data else None,
+        "sc_pause_fn":     eth_data.get("has_pause_fn") if eth_data else None,
     }
 
     return {
@@ -592,7 +738,7 @@ def score_coin(symbol: str, meta: dict, mkt: Optional[dict],
         "enforcement":    meta.get("enforcement"),
         "age_yrs":        meta.get("age"),
         "chains":         meta.get("chains"),
-        "has_pause":      meta.get("pause"),
+        "has_pause":      has_pause,
         "sparkline":      ph.get("history", []) if ph else [],
         "last_updated":  datetime.now(timezone.utc).isoformat(),
     }
@@ -622,7 +768,7 @@ def run_pipeline():
         mkt = market_data.get(sym)
         ph  = fetch_price_history(sym, days=90)
         price_histories[sym] = ph
-        time.sleep(3)
+        time.sleep(1)  # CoinGecko stagger (authenticated)
 
         sp = fetch_bid_askSpread(sym)
         spread_data[sym] = sp
@@ -639,6 +785,26 @@ def run_pipeline():
             tvl_data[sym] = tvl
         time.sleep(2)
 
+    # Step 3b: Per-coin contract verification (Etherscan + TronGrid)
+    contract_data = {}
+    for sym, meta in COIN_META.items():
+        contracts = meta.get("contracts", {})
+        eth_contract = contracts.get("ethereum")
+        tron_contract = contracts.get("tron")
+
+        if eth_contract:
+            contract_data[sym] = fetch_contract_info(eth_contract, "ethereum")
+            time.sleep(0.2)   # Etherscan free: 5/sec
+        elif tron_contract:
+            contract_data[sym] = fetch_contract_info(tron_contract, "tron")
+            time.sleep(0.5)   # TronGrid ~2/sec
+        else:
+            contract_data[sym] = {
+                "verified": False, "is_proxy": False, "implementation": None,
+                "contract_name": None, "has_pause_fn": meta.get("pause", False),
+                "chain": None,
+            }
+
     # Step 4: Compute scores
     log.info("Computing scores...")
     for sym, meta in COIN_META.items():
@@ -646,10 +812,11 @@ def run_pipeline():
         ph    = price_histories.get(sym)
         sp    = spread_data.get(sym)
         tvl   = tvl_data.get(sym)
+        eth   = contract_data.get(sym)
         ex_n  = 5  # conservative default; full exchange count too slow for daily pipeline
 
         try:
-            result = score_coin(sym, meta, mkt, ph, sp, ex_n, tvl)
+            result = score_coin(sym, meta, mkt, ph, sp, ex_n, tvl, eth)
             results.append(result)
         except Exception as e:
             log.error(f"Failed to score {sym}: {e}")
@@ -668,10 +835,10 @@ def run_pipeline():
 
     # Full data
     output = {
-        "version":      "1.1",
+        "version":      "1.2",
         "run_id":       timestamp,
         "methodology":  "https://stablecoinratings.org/methodology",
-        "data_sources": ["CoinGecko", "Binance", "DeFiLlama"],
+        "data_sources": ["CoinGecko", "Binance", "DeFiLlama", "Etherscan"],
         "usd_stablecoins": usd_stablecoins,
         "non_usd_stablecoins": non_usd_stablecoins,
         "all_coins":    results,
